@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frutísima Madre</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f6f6f6;
+}
+
+header{
+  text-align:center;
+  background:#fff;
+  padding:16px;
+}
+
+header img{
+  max-width:260px;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:16px;
+}
+
+.card{
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 4px 10px rgba(0,0,0,.1);
+  margin-bottom:20px;
+  overflow:hidden;
+}
+
+.card img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+}
+
+.card h2{
+  margin:12px;
+}
+
+.card p{
+  margin:0 12px 12px;
+  color:#555;
+}
+
+button{
+  margin:12px;
+  width:calc(100% - 24px);
+  padding:14px;
+  border:none;
+  border-radius:10px;
+  font-size:16px;
+  font-weight:bold;
+  background:#25D366;
+  color:#000;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <img src="logo.png" alt="Frutísima Madre">
+</header>
+
+<div class="container">
+
+  <!-- DORILOCOS -->
+  <div class="card">
+    <img src="dorilocos.jpg" alt="Dorilocos">
+    <h2>Dorilocos</h2>
+    <p>$50 · Con tus extras favoritos</p>
+    <button onclick="pedir('Dorilocos')">Pedir por WhatsApp</button>
+  </div>
+
+  <!-- FRUTA PREPARADA -->
+  <div class="card">
+    <img src="fruta.jpg" alt="Fruta preparada">
+    <h2>Fruta preparada</h2>
+    <p>Ch $35 · Med $45 · Gde $60</p>
+    <button onclick="pedir('Fruta preparada')">Pedir por WhatsApp</button>
+  </div>
+
+  <!-- CALDO DE OSO -->
+  <div class="card">
+    <img src="caldo.jpg" alt="Caldo de oso">
+    <h2>Caldo de oso</h2>
+    <p>Ch $40 · Gde $60</p>
+    <button onclick="pedir('Caldo de oso')">Pedir por WhatsApp</button>
+  </div>
+
+  <!-- PAPAS LOCAS -->
+  <div class="card">
+    <img src="papas.jpg" alt="Papas locas">
+    <h2>Papas locas</h2>
+    <p>$50 · Bien cargadas</p>
+    <button onclick="pedir('Papas locas')">Pedir por WhatsApp</button>
+  </div>
+
+</div>
+
+<script>
+const NUMERO = "5214774961901";
+
+function pedir(producto){
+  const texto = `Hola, quiero pedir ${producto} de Frutísima Madre 🌶️🍉`;
+  window.location.href = `https://wa.me/${NUMERO}?text=${encodeURIComponent(texto)}`;
+}
+</script>
+
+</body>
+</html>
