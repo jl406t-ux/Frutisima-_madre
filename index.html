@@ -1,68 +1,58 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Frutísima Madre</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FRUTÍSIMA MADRE</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:#f6f6f6;
-}
+  body{font-family:Inter, Arial, sans-serif;background:#f6f7f9;margin:0;padding:16px}
+  h1{font-family:Poppins, Arial, sans-serif;text-align:center;margin:10px 0}
+  h2{font-family:Poppins, Arial, sans-serif;text-align:center;color:#555;font-weight:600;margin-top:6px}
 
-header{
-  text-align:center;
-  background:#fff;
-  padding:16px;
-}
+  header{max-width:900px;margin:0 auto 14px;display:flex;justify-content:center}
+  header img{max-width:260px;width:70%;height:auto}
 
-header img{
-  max-width:260px;
-}
+  .wrap{max-width:900px;margin:auto;display:grid;grid-template-columns:1fr;gap:16px}
+  @media (min-width: 980px){
+    .wrap{grid-template-columns: 1.4fr 0.9fr;align-items:start}
+    .cart{position:sticky;top:12px}
+  }
 
-.container{
-  max-width:900px;
-  margin:auto;
-  padding:16px;
-}
+  .card{background:#fff;border-radius:14px;box-shadow:0 4px 14px rgba(0,0,0,.08);overflow:hidden;border:1px solid #eee}
+  .card img{width:100%;height:220px;object-fit:cover}
+  .content{padding:14px}
+  .top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .badge{font-size:12px;padding:6px 10px;border-radius:999px;background:#ef4444;color:#fff;border:none;white-space:nowrap}
+  .price{font-weight:700;margin:8px 0;color:#111}
 
-.card{
-  background:#fff;
-  border-radius:14px;
-  box-shadow:0 4px 10px rgba(0,0,0,.1);
-  margin-bottom:20px;
-  overflow:hidden;
-}
+  label{display:block;margin-top:10px;font-size:14px;font-weight:700}
+  select,input[type="number"],textarea{
+    width:100%;padding:10px;margin-top:6px;border-radius:10px;border:1px solid #ccc;box-sizing:border-box
+  }
+  textarea{min-height:70px;resize:vertical}
+  .group{margin-top:6px}
+  .group label{font-weight:500;margin-top:6px}
 
-.card img{
-  width:100%;
-  height:220px;
-  object-fit:cover;
-}
+  .btn{
+    width:100%;padding:14px;border:none;border-radius:12px;cursor:pointer;font-weight:800;font-size:16px
+  }
+  .btn.add{background:#0f172a;color:#fff;margin-top:12px}
+  .btn.wa{background:#22c55e;color:#000}
+  .btn.danger{background:#ef4444;color:#fff}
+  .muted{color:#666;font-size:12px;margin-top:6px}
 
-.card h2{
-  margin:12px;
-}
-
-.card p{
-  margin:0 12px 12px;
-  color:#555;
-}
-
-button{
-  margin:12px;
-  width:calc(100% - 24px);
-  padding:14px;
-  border:none;
-  border-radius:10px;
-  font-size:16px;
-  font-weight:bold;
-  background:#25D366;
-  color:#000;
-  cursor:pointer;
-}
+  .cart .content{padding:14px}
+  .cart h3{margin:0 0 8px;font-family:Poppins, Arial, sans-serif}
+  .cart-list{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+  .item{border:1px solid #eee;border-radius:12px;padding:10px;background:#fff}
+  .item-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+  .item-name{font-weight:800}
+  .item-meta{color:#333;font-size:13px;white-space:pre-wrap}
+  .mini{font-size:12px;padding:8px 10px;border-radius:10px;border:1px solid #ddd;background:#fafafa;cursor:pointer}
+  .divider{height:1px;background:#eee;margin:12px 0}
 </style>
 </head>
 
@@ -72,49 +62,318 @@ button{
   <img src="logo.png" alt="Frutísima Madre">
 </header>
 
-<div class="container">
+<h1>Menú</h1>
+<h2>Arma tu pedido y envíalo por WhatsApp</h2>
 
-  <!-- DORILOCOS -->
-  <div class="card">
-    <img src="dorilocos.jpg" alt="Dorilocos">
-    <h2>Dorilocos</h2>
-    <p>$50 · Con tus extras favoritos</p>
-    <button onclick="pedir('Dorilocos')">Pedir por WhatsApp</button>
+<div class="wrap">
+
+  <!-- PRODUCTOS -->
+  <div class="products">
+
+    <!-- DORILOCOS -->
+    <div class="card" id="prod-dori">
+      <img src="dorilocos.jpg" alt="Dorilocos">
+      <div class="content">
+        <div class="top">
+          <h3 style="margin:0">🌶️ Dorilocos</h3>
+          <span class="badge">$50</span>
+        </div>
+
+        <label>Extras</label>
+        <div class="group">
+          <label><input type="checkbox" data-field="extra" value="Cacahuate japonés"> Cacahuate japonés</label>
+          <label><input type="checkbox" data-field="extra" value="Cacahuate salado"> Cacahuate salado</label>
+          <label><input type="checkbox" data-field="extra" value="Churrito rojo"> Churrito rojo</label>
+          <label><input type="checkbox" data-field="extra" value="Cueritos"> Cueritos</label>
+          <label><input type="checkbox" data-field="extra" value="Pepino"> Pepino</label>
+          <label><input type="checkbox" data-field="extra" value="Jícama"> Jícama</label>
+          <label><input type="checkbox" data-field="extra" value="Limón"> Limón</label>
+          <label><input type="checkbox" data-field="extra" value="Salsa Don Vasco"> Salsa Don Vasco</label>
+          <label><input type="checkbox" data-field="extra" value="Salsa pico de gallo"> Salsa pico de gallo</label>
+          <label><input type="checkbox" data-field="extra" value="Salsa negra"> Salsa negra</label>
+          <label><input type="checkbox" data-field="extra" value="Chamoy de jamaica"> Chamoy de jamaica</label>
+          <label><input type="checkbox" data-field="extra" value="Chile pica"> Chile pica</label>
+          <label><input type="checkbox" data-field="extra" value="Chile no pica"> Chile no pica</label>
+          <label><input type="checkbox" data-field="extra" value="Queso rallado"> Queso rallado</label>
+        </div>
+
+        <label>Cantidad</label>
+        <input type="number" data-field="qty" min="1" value="1" />
+
+        <label>Observaciones</label>
+        <textarea data-field="notes" placeholder="Ej: bien picoso..."></textarea>
+
+        <button class="btn add" type="button"
+          onclick="addToCart({product:'Dorilocos', priceHint:'$50', rootId:'prod-dori', hasSize:false, hasFruits:false})">➕ Agregar</button>
+      </div>
+    </div>
+
+    <!-- FRUTA PREPARADA -->
+    <div class="card" id="prod-fruta" style="margin-top:16px">
+      <img src="fruta.jpg" alt="Fruta preparada">
+      <div class="content">
+        <div class="top">
+          <h3 style="margin:0">🍓 Fruta preparada</h3>
+          <span class="badge">Ch $35 · M $45 · G $60</span>
+        </div>
+
+        <label>Tamaño</label>
+        <select data-field="size">
+          <option>Chico ($35)</option>
+          <option>Mediano ($45)</option>
+          <option>Grande ($60)</option>
+        </select>
+
+        <label>Frutas</label>
+        <div class="group">
+          <label><input type="checkbox" data-field="fruit" value="Sandía"> Sandía</label>
+          <label><input type="checkbox" data-field="fruit" value="Piña"> Piña</label>
+          <label><input type="checkbox" data-field="fruit" value="Mango"> Mango</label>
+          <label><input type="checkbox" data-field="fruit" value="Melón chino"> Melón chino</label>
+          <label><input type="checkbox" data-field="fruit" value="Melón verde"> Melón verde</label>
+          <label><input type="checkbox" data-field="fruit" value="Pepino"> Pepino</label>
+          <label><input type="checkbox" data-field="fruit" value="Jícama"> Jícama</label>
+        </div>
+
+        <label>Extras</label>
+        <div class="group">
+          <label><input type="checkbox" data-field="extra" value="Chile pica"> Chile pica</label>
+          <label><input type="checkbox" data-field="extra" value="Chile no pica"> Chile no pica</label>
+          <label><input type="checkbox" data-field="extra" value="Queso rallado"> Queso rallado</label>
+          <label><input type="checkbox" data-field="extra" value="Limón"> Limón</label>
+          <label><input type="checkbox" data-field="extra" value="Tajín"> Tajín</label>
+          <label><input type="checkbox" data-field="extra" value="Chamoy de jamaica"> Chamoy de jamaica</label>
+        </div>
+
+        <label>Cantidad</label>
+        <input type="number" data-field="qty" min="1" value="1" />
+
+        <label>Observaciones</label>
+        <textarea data-field="notes" placeholder="Ej: sin queso, más chamoy..."></textarea>
+
+        <button class="btn add" type="button"
+          onclick="addToCart({product:'Fruta preparada', priceHint:'Ch $35 · M $45 · G $60', rootId:'prod-fruta', hasSize:true, hasFruits:true})">➕ Agregar</button>
+      </div>
+    </div>
+
+    <!-- CALDO DE OSO -->
+    <div class="card" id="prod-caldo" style="margin-top:16px">
+      <img src="caldo.jpg" alt="Caldo de oso">
+      <div class="content">
+        <div class="top">
+          <h3 style="margin:0">🍺 Caldo de oso</h3>
+          <span class="badge">Ch $40 · G $60</span>
+        </div>
+
+        <label>Tamaño</label>
+        <select data-field="size">
+          <option>Chico ($40)</option>
+          <option>Grande ($60)</option>
+        </select>
+
+        <label>Frutas</label>
+        <div class="group">
+          <label><input type="checkbox" data-field="fruit" value="Sandía"> Sandía</label>
+          <label><input type="checkbox" data-field="fruit" value="Piña"> Piña</label>
+          <label><input type="checkbox" data-field="fruit" value="Mango"> Mango</label>
+          <label><input type="checkbox" data-field="fruit" value="Melón chino"> Melón chino</label>
+          <label><input type="checkbox" data-field="fruit" value="Melón verde"> Melón verde</label>
+          <label><input type="checkbox" data-field="fruit" value="Pepino"> Pepino</label>
+          <label><input type="checkbox" data-field="fruit" value="Jícama"> Jícama</label>
+        </div>
+
+        <label>Extras</label>
+        <div class="group">
+          <label><input type="checkbox" data-field="extra" value="Vinagre de piña"> Vinagre de piña</label>
+          <label><input type="checkbox" data-field="extra" value="Chile pica"> Chile pica</label>
+          <label><input type="checkbox" data-field="extra" value="Chile no pica"> Chile no pica</label>
+          <label><input type="checkbox" data-field="extra" value="Queso rallado"> Queso rallado</label>
+          <label><input type="checkbox" data-field="extra" value="Limón"> Limón</label>
+          <label><input type="checkbox" data-field="extra" value="Chamoy de jamaica"> Chamoy de jamaica</label>
+        </div>
+
+        <label>Cantidad</label>
+        <input type="number" data-field="qty" min="1" value="1" />
+
+        <label>Observaciones</label>
+        <textarea data-field="notes" placeholder="Ej: con mucho vinagre..."></textarea>
+
+        <button class="btn add" type="button"
+          onclick="addToCart({product:'Caldo de oso', priceHint:'Ch $40 · G $60', rootId:'prod-caldo', hasSize:true, hasFruits:true})">➕ Agregar</button>
+      </div>
+    </div>
+
+    <!-- PAPAS LOCAS -->
+    <div class="card" id="prod-papas" style="margin-top:16px">
+      <img src="papas.jpg" alt="Papas locas">
+      <div class="content">
+        <div class="top">
+          <h3 style="margin:0">🥔 Papas locas</h3>
+          <span class="badge">$50</span>
+        </div>
+
+        <label>Extras</label>
+        <div class="group">
+          <label><input type="checkbox" data-field="extra" value="Cacahuate japonés"> Cacahuate japonés</label>
+          <label><input type="checkbox" data-field="extra" value="Cacahuate salado"> Cacahuate salado</label>
+          <label><input type="checkbox" data-field="extra" value="Churrito rojo"> Churrito rojo</label>
+          <label><input type="checkbox" data-field="extra" value="Cueritos"> Cueritos</label>
+          <label><input type="checkbox" data-field="extra" value="Pepino"> Pepino</label>
+          <label><input type="checkbox" data-field="extra" value="Jícama"> Jícama</label>
+          <label><input type="checkbox" data-field="extra" value="Limón"> Limón</label>
+          <label><input type="checkbox" data-field="extra" value="Salsa Don Vasco"> Salsa Don Vasco</label>
+          <label><input type="checkbox" data-field="extra" value="Salsa negra"> Salsa negra</label>
+          <label><input type="checkbox" data-field="extra" value="Chamoy de jamaica"> Chamoy de jamaica</label>
+          <label><input type="checkbox" data-field="extra" value="Chile pica"> Chile pica</label>
+          <label><input type="checkbox" data-field="extra" value="Chile no pica"> Chile no pica</label>
+          <label><input type="checkbox" data-field="extra" value="Queso rallado"> Queso rallado</label>
+        </div>
+
+        <label>Cantidad</label>
+        <input type="number" data-field="qty" min="1" value="1" />
+
+        <label>Observaciones</label>
+        <textarea data-field="notes" placeholder="Ej: sin cueritos..."></textarea>
+
+        <button class="btn add" type="button"
+          onclick="addToCart({product:'Papas locas', priceHint:'$50', rootId:'prod-papas', hasSize:false, hasFruits:false})">➕ Agregar</button>
+      </div>
+    </div>
+
   </div>
 
-  <!-- FRUTA PREPARADA -->
-  <div class="card">
-    <img src="fruta.jpg" alt="Fruta preparada">
-    <h2>Fruta preparada</h2>
-    <p>Ch $35 · Med $45 · Gde $60</p>
-    <button onclick="pedir('Fruta preparada')">Pedir por WhatsApp</button>
-  </div>
+  <!-- CARRITO -->
+  <div class="card cart">
+    <div class="content">
+      <div class="top">
+        <h3 style="margin:0">🧺 Tu pedido</h3>
+        <span class="badge" id="cartCount">0 productos</span>
+      </div>
 
-  <!-- CALDO DE OSO -->
-  <div class="card">
-    <img src="caldo.jpg" alt="Caldo de oso">
-    <h2>Caldo de oso</h2>
-    <p>Ch $40 · Gde $60</p>
-    <button onclick="pedir('Caldo de oso')">Pedir por WhatsApp</button>
-  </div>
+      <div class="muted">Agrega productos y al final manda todo por WhatsApp.</div>
 
-  <!-- PAPAS LOCAS -->
-  <div class="card">
-    <img src="papas.jpg" alt="Papas locas">
-    <h2>Papas locas</h2>
-    <p>$50 · Bien cargadas</p>
-    <button onclick="pedir('Papas locas')">Pedir por WhatsApp</button>
+      <div class="cart-list" id="cartList"></div>
+
+      <div class="divider"></div>
+
+      <label>Nombre (opcional)</label>
+      <input type="text" id="customerName" placeholder="Ej: Juan / Carlos" />
+
+      <label>Observaciones generales (opcional)</label>
+      <textarea id="generalNotes" placeholder="Ej: voy por él en 10 min, para llevar..."></textarea>
+
+      <button class="btn wa" type="button" onclick="checkoutWhatsApp()">📲 Realizar pedido por WhatsApp</button>
+      <div class="muted">Se abrirá WhatsApp con el pedido completo.</div>
+
+      <button class="btn danger" type="button" style="margin-top:10px" onclick="clearCart()">🗑️ Vaciar carrito</button>
+    </div>
   </div>
 
 </div>
 
 <script>
-const NUMERO = "5214774961901";
+  const WA_NUMBER = "5214774961901";
+  let cart = [];
 
-function pedir(producto){
-  const texto = `Hola, quiero pedir ${producto} de Frutísima Madre 🌶️🍉`;
-  window.location.href = `https://wa.me/${NUMERO}?text=${encodeURIComponent(texto)}`;
-}
+  function qs(root, sel){ return root.querySelector(sel); }
+  function qsa(root, sel){ return Array.from(root.querySelectorAll(sel)); }
+
+  function getValues(rootId, field){
+    const root = document.getElementById(rootId);
+    return qsa(root, `[data-field="${field}"]:checked`).map(x => x.value);
+  }
+
+  function getInputValue(rootId, field){
+    const root = document.getElementById(rootId);
+    const el = qs(root, `[data-field="${field}"]`);
+    return el ? el.value : "";
+  }
+
+  function addToCart(cfg){
+    const size = cfg.hasSize ? getInputValue(cfg.rootId, "size") : "";
+    const qty = Math.max(1, parseInt(getInputValue(cfg.rootId, "qty") || "1", 10) || 1);
+    const notes = (getInputValue(cfg.rootId, "notes") || "").trim();
+    const fruits = cfg.hasFruits ? getValues(cfg.rootId, "fruit") : [];
+    const extras = getValues(cfg.rootId, "extra");
+
+    cart.push({
+      id: (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random()),
+      product: cfg.product,
+      priceHint: cfg.priceHint,
+      size, qty, fruits, extras, notes
+    });
+
+    renderCart();
+  }
+
+  function removeItem(id){
+    cart = cart.filter(x => x.id !== id);
+    renderCart();
+  }
+
+  function clearCart(){
+    cart = [];
+    renderCart();
+  }
+
+  function renderCart(){
+    const list = document.getElementById("cartList");
+    const count = document.getElementById("cartCount");
+    count.textContent = `${cart.length} producto${cart.length===1?'':'s'}`;
+
+    if(cart.length === 0){
+      list.innerHTML = `<div class="muted">Tu carrito está vacío. Agrega algo 👇</div>`;
+      return;
+    }
+
+    list.innerHTML = cart.map((it, idx) => {
+      const lines = [];
+      lines.push(`x${it.qty} ${it.product}${it.priceHint ? " ("+it.priceHint+")" : ""}`);
+      if(it.size) lines.push(`Tamaño: ${it.size}`);
+      if(it.fruits && it.fruits.length) lines.push(`Frutas: ${it.fruits.join(", ")}`);
+      if(it.extras && it.extras.length) lines.push(`Extras: ${it.extras.join(", ")}`);
+      if(it.notes) lines.push(`Obs: ${it.notes}`);
+
+      return `
+        <div class="item">
+          <div class="item-top">
+            <div class="item-name">${idx+1}. ${it.product}</div>
+            <button class="mini" type="button" onclick="removeItem('${it.id}')">Quitar</button>
+          </div>
+          <div class="item-meta">${lines.slice(1).join("\n")}</div>
+          <div class="muted" style="margin-top:6px">${lines[0]}</div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  function checkoutWhatsApp(){
+    if(cart.length === 0){
+      alert("Tu carrito está vacío. Agrega al menos un producto.");
+      return;
+    }
+
+    const name = (document.getElementById("customerName").value || "").trim();
+    const gNotes = (document.getElementById("generalNotes").value || "").trim();
+
+    let msg = "Hola, quiero pedir en FRUTÍSIMA MADRE:\n";
+    if(name) msg += `Nombre: ${name}\n`;
+    msg += "\n🧺 Pedido:\n";
+
+    cart.forEach((it, i) => {
+      msg += `${i+1}) x${it.qty} ${it.product}\n`;
+      if(it.size) msg += `   - Tamaño: ${it.size}\n`;
+      if(it.fruits && it.fruits.length) msg += `   - Frutas: ${it.fruits.join(", ")}\n`;
+      msg += `   - Extras: ${(it.extras && it.extras.length) ? it.extras.join(", ") : "—"}\n`;
+      if(it.notes) msg += `   - Observaciones: ${it.notes}\n`;
+    });
+
+    if(gNotes) msg += `\n📝 Observaciones generales: ${gNotes}\n`;
+
+    window.location.href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+  }
+
+  renderCart();
 </script>
 
 </body>
