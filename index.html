@@ -1,333 +1,89 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FRUTÍSIMA MADRE</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-
-<style>
-body{
-  margin:0;
-  font-family:Inter, Arial, sans-serif;
-  background:#f6f7f9;
-  padding:16px;
-}
-header{
-  max-width:900px;
-  margin:0 auto 16px;
-  display:flex;
-  justify-content:center;
-}
-header img{
-  max-width:260px;
-  width:70%;
-}
-h1,h2,h3{font-family:Poppins, Arial, sans-serif;}
-h1{text-align:center;margin:8px 0;}
-h2{text-align:center;color:#555;margin-top:4px;}
-
-.wrap{
-  max-width:900px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:1fr;
-  gap:16px;
-}
-@media(min-width:980px){
-  .wrap{grid-template-columns:1.4fr .9fr;}
-  .cart{position:sticky;top:12px;}
-}
-
-.card{
-  background:#fff;
-  border-radius:14px;
-  box-shadow:0 4px 14px rgba(0,0,0,.08);
-  overflow:hidden;
-}
-.card img{
-  width:100%;
-  height:220px;
-  object-fit:cover;
-}
-.content{padding:14px;}
-.top{display:flex;justify-content:space-between;align-items:center;}
-.badge{
-  background:#ef4444;
-  color:#fff;
-  padding:6px 10px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:700;
-}
-
-label{display:block;margin-top:10px;font-weight:700;font-size:14px;}
-select,input,textarea{
-  width:100%;
-  margin-top:6px;
-  padding:10px;
-  border-radius:10px;
-  border:1px solid #ccc;
-  box-sizing:border-box;
-}
-textarea{resize:vertical;min-height:70px;}
-
-.group label{font-weight:500;}
-
-.btn{
-  width:100%;
-  margin-top:12px;
-  padding:14px;
-  border:none;
-  border-radius:12px;
-  font-size:16px;
-  font-weight:800;
-  cursor:pointer;
-}
-.add{background:#0f172a;color:#fff;}
-.wa{background:#22c55e;color:#000;}
-.danger{background:#ef4444;color:#fff;}
-
-.cart-list{margin-top:10px;display:flex;flex-direction:column;gap:10px;}
-.item{border:1px solid #eee;border-radius:10px;padding:10px;}
-.item-top{display:flex;justify-content:space-between;}
-.muted{font-size:12px;color:#666;}
-.mini{padding:6px 10px;border-radius:8px;border:1px solid #ccc;cursor:pointer;}
-.divider{height:1px;background:#eee;margin:12px 0;}
-</style>
-</head>
-
-<body>
-
-<header>
-  <img src="logo.jpg" alt="Frutísima Madre">
-</header>
-
-<h1>Menú</h1>
-<h2>Arma tu pedido y envíalo por WhatsApp</h2>
-
-<div class="wrap">
-
-<!-- PRODUCTOS -->
-<div class="products">
-
-<!-- 1️⃣ FRUTA PREPARADA -->
-<div class="card" id="prod-fruta">
-<img src="fruta.jpg">
-<div class="content">
-<div class="top">
-<h3>🍉 Fruta preparada</h3>
-<span class="badge">Ch $35 · M $45 · G $60</span>
-</div>
-
-<label>Tamaño</label>
-<select data-field="size">
-<option>Chico ($35)</option>
-<option>Mediano ($45)</option>
-<option>Grande ($60)</option>
-</select>
-
-<label>Frutas</label>
-<div class="group">
-<label><input type="checkbox" data-field="fruit" value="Sandía"> Sandía</label>
-<label><input type="checkbox" data-field="fruit" value="Piña"> Piña</label>
-<label><input type="checkbox" data-field="fruit" value="Mango"> Mango</label>
-<label><input type="checkbox" data-field="fruit" value="Melón chino"> Melón chino</label>
-<label><input type="checkbox" data-field="fruit" value="Melón verde"> Melón verde</label>
-<label><input type="checkbox" data-field="fruit" value="Pepino"> Pepino</label>
-<label><input type="checkbox" data-field="fruit" value="Jícama"> Jícama</label>
-</div>
-
-<label>Extras</label>
-<div class="group">
-<label><input type="checkbox" data-field="extra" value="Chile pica"> Chile pica</label>
-<label><input type="checkbox" data-field="extra" value="Chile no pica"> Chile no pica</label>
-<label><input type="checkbox" data-field="extra" value="Queso rallado"> Queso rallado</label>
-<label><input type="checkbox" data-field="extra" value="Limón"> Limón</label>
-<label><input type="checkbox" data-field="extra" value="Chamoy de jamaica"> Chamoy de jamaica</label>
-</div>
-
-<label>Cantidad</label>
-<input type="number" data-field="qty" value="1" min="1">
-
-<label>Observaciones</label>
-<textarea data-field="notes"></textarea>
-
-<button class="btn add" onclick="addToCart('Fruta preparada','prod-fruta',true,true)">➕ Agregar</button>
-</div>
-</div>
-
-<!-- 2️⃣ CALDO DE OSO -->
-<div class="card" id="prod-caldo">
-<img src="caldo.jpg">
-<div class="content">
-<div class="top">
-<h3>🍺 Caldo de oso</h3>
-<span class="badge">Ch $40 · G $60</span>
-</div>
-
-<label>Tamaño</label>
-<select data-field="size">
-<option>Chico ($40)</option>
-<option>Grande ($60)</option>
-</select>
-
-<label>Frutas</label>
-<div class="group">
-<label><input type="checkbox" data-field="fruit" value="Sandía"> Sandía</label>
-<label><input type="checkbox" data-field="fruit" value="Piña"> Piña</label>
-<label><input type="checkbox" data-field="fruit" value="Mango"> Mango</label>
-<label><input type="checkbox" data-field="fruit" value="Melón chino"> Melón chino</label>
-<label><input type="checkbox" data-field="fruit" value="Melón verde"> Melón verde</label>
-<label><input type="checkbox" data-field="fruit" value="Pepino"> Pepino</label>
-<label><input type="checkbox" data-field="fruit" value="Jícama"> Jícama</label>
-</div>
-
-<label>Extras</label>
-<div class="group">
-<label><input type="checkbox" data-field="extra" value="Vinagre de piña"> Vinagre de piña</label>
-<label><input type="checkbox" data-field="extra" value="Chile pica"> Chile pica</label>
-<label><input type="checkbox" data-field="extra" value="Chile no pica"> Chile no pica</label>
-<label><input type="checkbox" data-field="extra" value="Queso rallado"> Queso rallado</label>
-<label><input type="checkbox" data-field="extra" value="Limón"> Limón</label>
-</div>
-
-<label>Cantidad</label>
-<input type="number" data-field="qty" value="1" min="1">
-
-<label>Observaciones</label>
-<textarea data-field="notes"></textarea>
-
-<button class="btn add" onclick="addToCart('Caldo de oso','prod-caldo',true,true)">➕ Agregar</button>
-</div>
-</div>
-
-<!-- 3️⃣ DORILOCOS -->
-<div class="card" id="prod-dori">
-<img src="dorilocos.jpg">
-<div class="content">
-<div class="top">
-<h3>🌶️ Dorilocos</h3>
-<span class="badge">$50</span>
-</div>
-
-<label>Extras</label>
-<div class="group">
-<label><input type="checkbox" data-field="extra" value="Cacahuate japonés"> Cacahuate japonés</label>
-<label><input type="checkbox" data-field="extra" value="Cacahuate salado"> Cacahuate salado</label>
-<label><input type="checkbox" data-field="extra" value="Churrito rojo"> Churrito rojo</label>
-<label><input type="checkbox" data-field="extra" value="Cueritos"> Cueritos</label>
-<label><input type="checkbox" data-field="extra" value="Pepino"> Pepino</label>
-<label><input type="checkbox" data-field="extra" value="Jícama"> Jícama</label>
-<label><input type="checkbox" data-field="extra" value="Limón"> Limón</label>
-<label><input type="checkbox" data-field="extra" value="Salsa Don Vasco"> Salsa Don Vasco</label>
-<label><input type="checkbox" data-field="extra" value="Salsa negra"> Salsa negra</label>
-<label><input type="checkbox" data-field="extra" value="Chamoy de jamaica"> Chamoy de jamaica</label>
-<label><input type="checkbox" data-field="extra" value="Queso rallado"> Queso rallado</label>
-</div>
-
-<label>Cantidad</label>
-<input type="number" data-field="qty" value="1" min="1">
-
-<label>Observaciones</label>
-<textarea data-field="notes"></textarea>
-
-<button class="btn add" onclick="addToCart('Dorilocos','prod-dori',false,false)">➕ Agregar</button>
-</div>
-</div>
-
-<!-- 4️⃣ PAPAS LOCAS -->
-<div class="card" id="prod-papas">
-<img src="papas.jpg">
-<div class="content">
-<div class="top">
-<h3>🥔 Papas locas</h3>
-<span class="badge">$50</span>
-</div>
-
-<label>Extras</label>
-<div class="group">
-<label><input type="checkbox" data-field="extra" value="Cacahuate japonés"> Cacahuate japonés</label>
-<label><input type="checkbox" data-field="extra" value="Cacahuate salado"> Cacahuate salado</label>
-<label><input type="checkbox" data-field="extra" value="Churrito rojo"> Churrito rojo</label>
-<label><input type="checkbox" data-field="extra" value="Cueritos"> Cueritos</label>
-<label><input type="checkbox" data-field="extra" value="Pepino"> Pepino</label>
-<label><input type="checkbox" data-field="extra" value="Jícama"> Jícama</label>
-<label><input type="checkbox" data-field="extra" value="Limón"> Limón</label>
-<label><input type="checkbox" data-field="extra" value="Salsa Don Vasco"> Salsa Don Vasco</label>
-<label><input type="checkbox" data-field="extra" value="Salsa negra"> Salsa negra</label>
-<label><input type="checkbox" data-field="extra" value="Chamoy de jamaica"> Chamoy de jamaica</label>
-<label><input type="checkbox" data-field="extra" value="Queso rallado"> Queso rallado</label>
-</div>
-
-<label>Cantidad</label>
-<input type="number" data-field="qty" value="1" min="1">
-
-<label>Observaciones</label>
-<textarea data-field="notes"></textarea>
-
-<button class="btn add" onclick="addToCart('Papas locas','prod-papas',false,false)">➕ Agregar</button>
-</div>
-</div>
-
-</div>
-
-<!-- CARRITO -->
-<div class="card cart">
-<div class="content">
-<h3>🧺 Tu pedido</h3>
-<div id="cartList"></div>
-<div class="divider"></div>
-<button class="btn wa" onclick="checkout()">📲 Enviar pedido por WhatsApp</button>
-<button class="btn danger" onclick="clearCart()">🗑️ Vaciar carrito</button>
-</div>
-</div>
-
-</div>
-
 <script>
 const WA="5214774961901";
 let cart=[];
 
 function addToCart(name,id,hasSize,hasFruit){
-const r=document.getElementById(id);
-const size=hasSize?r.querySelector('[data-field="size"]').value:'';
-const qty=r.querySelector('[data-field="qty"]').value;
-const notes=r.querySelector('[data-field="notes"]').value;
-const fruits=hasFruit?[...r.querySelectorAll('[data-field="fruit"]:checked')].map(e=>e.value):[];
-const extras=[...r.querySelectorAll('[data-field="extra"]:checked')].map(e=>e.value);
-cart.push({name,size,qty,fruits,extras,notes});
-render();
+  const r=document.getElementById(id);
+  const size=hasSize ? r.querySelector('[data-field="size"]').value : '';
+  const qty=parseInt(r.querySelector('[data-field="qty"]').value) || 1;
+  const notes=r.querySelector('[data-field="notes"]').value;
+  const fruits=hasFruit ? [...r.querySelectorAll('[data-field="fruit"]:checked')].map(e=>e.value) : [];
+  const extras=[...r.querySelectorAll('[data-field="extra"]:checked')].map(e=>e.value);
+
+  // 💰 PRECIO BASE
+  let price = 0;
+
+  if(name==="Fruta preparada"){
+    if(size.includes("Chico")) price = 35;
+    if(size.includes("Mediano")) price = 45;
+    if(size.includes("Grande")) price = 60;
+  }
+
+  if(name==="Caldo de oso"){
+    if(size.includes("Chico")) price = 40;
+    if(size.includes("Grande")) price = 60;
+  }
+
+  if(name==="Dorilocos" || name==="Papas locas"){
+    price = 50;
+  }
+
+  // 🥭 EXTRA MANGO +10
+  let mangoExtra = false;
+  if(fruits.includes("Mango")){
+    price += 10;
+    mangoExtra = true;
+  }
+
+  cart.push({
+    name,
+    size,
+    qty,
+    fruits,
+    extras,
+    notes,
+    price,
+    mangoExtra
+  });
+
+  render();
 }
 
 function render(){
-const l=document.getElementById('cartList');
-l.innerHTML='';
-cart.forEach((i,n)=>{
-l.innerHTML+=`<div class="item"><b>${n+1}) ${i.qty} ${i.name}</b><br>
-${i.size?`Tamaño: ${i.size}<br>`:''}
-${i.fruits.length?`Frutas: ${i.fruits.join(', ')}<br>`:''}
-${i.extras.length?`Extras: ${i.extras.join(', ')}<br>`:''}
-${i.notes?`Obs: ${i.notes}`:''}</div>`;
-});
+  const l=document.getElementById('cartList');
+  l.innerHTML='';
+
+  cart.forEach((i,n)=>{
+    l.innerHTML+=`
+    <div class="item">
+      <b>${n+1}) ${i.qty} ${i.name} — $${i.price}</b><br>
+      ${i.size ? `Tamaño: ${i.size}<br>` : ``}
+      ${i.fruits.length ? `Frutas: ${i.fruits.join(', ')}${i.mangoExtra ? ' (+ Mango $10)' : ''}<br>` : ``}
+      ${i.extras.length ? `Extras: ${i.extras.join(', ')}<br>` : ``}
+      ${i.notes ? `Obs: ${i.notes}` : ``}
+    </div>`;
+  });
 }
 
-function clearCart(){cart=[];render();}
+function clearCart(){
+  cart=[];
+  render();
+}
 
 function checkout(){
-let m="Hola, quiero pedir en FRUTÍSIMA MADRE:\n";
-cart.forEach((i,n)=>{
-m+=`\n${n+1}) ${i.qty} ${i.name}`;
-if(i.size)m+=`\n   Tamaño: ${i.size}`;
-if(i.fruits.length)m+=`\n   Frutas: ${i.fruits.join(', ')}`;
-if(i.extras.length)m+=`\n   Extras: ${i.extras.join(', ')}`;
-if(i.notes)m+=`\n   Obs: ${i.notes}`;
-});
-location.href=`https://wa.me/${WA}?text=${encodeURIComponent(m)}`;
+  let m="Hola, quiero pedir en FRUTÍSIMA MADRE:\n";
+
+  cart.forEach((i,n)=>{
+    m+=`\n${n+1}) ${i.qty} ${i.name} — $${i.price}`;
+    if(i.size) m+=`\n   Tamaño: ${i.size}`;
+    if(i.fruits.length){
+      m+=`\n   Frutas: ${i.fruits.join(', ')}`;
+      if(i.mangoExtra) m+=` (+ Mango $10)`;
+    }
+    if(i.extras.length) m+=`\n   Extras: ${i.extras.join(', ')}`;
+    if(i.notes) m+=`\n   Obs: ${i.notes}`;
+  });
+
+  location.href=`https://wa.me/${WA}?text=${encodeURIComponent(m)}`;
 }
 </script>
-
-</body>
-</html>
-
