@@ -42,10 +42,29 @@ textarea{resize:vertical;min-height:70px}
 .mini{padding:6px 10px;border-radius:8px;border:1px solid #ccc;cursor:pointer;background:#fafafa}
 .divider{height:1px;background:#eee;margin:12px 0}
 
+.totals{
+  border:1px dashed #ddd;
+  border-radius:12px;
+  padding:10px;
+  margin-top:10px;
+  background:#fafafa;
+  font-size:14px;
+}
+.trow{display:flex;justify-content:space-between;gap:10px;margin:6px 0}
+.trow strong{font-family:Poppins,Arial,sans-serif}
+.note{
+  margin-top:8px;
+  padding:10px;
+  border-radius:10px;
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  font-size:13px;
+}
+
 /* MAPA */
 .map-card{background:#fff;border-radius:14px;box-shadow:0 4px 14px rgba(0,0,0,.08);overflow:hidden;margin:18px auto 8px;max-width:900px;border:1px solid #eee}
 .map-title{padding:12px 14px;font-family:Poppins,Arial,sans-serif;font-weight:700}
-.map-embed{width:100%;height:340px;border:0}
+.map-embed{width:100%;height:360px;border:0}
 .map-actions{padding:12px 14px 16px;font-size:14px}
 .map-actions a{display:inline-block;margin-top:8px;text-decoration:none;font-weight:800}
 </style>
@@ -73,7 +92,6 @@ textarea{resize:vertical;min-height:70px}
           <h3 style="margin:0">🍉 Fruta preparada</h3>
           <span class="badge">Ch $35 · M $45 · G $60</span>
         </div>
-        <div class="muted">🥭 Mango suma $10 por unidad</div>
 
         <label>Tamaño</label>
         <select data-field="size">
@@ -86,7 +104,7 @@ textarea{resize:vertical;min-height:70px}
         <div class="group">
           <label><input type="checkbox" data-field="fruit" value="Sandía"> Sandía</label>
           <label><input type="checkbox" data-field="fruit" value="Piña"> Piña</label>
-          <label><input type="checkbox" data-field="fruit" value="Mango"> Mango (+$10 c/u)</label>
+          <label><input type="checkbox" data-field="fruit" value="Mango"> Mango</label>
           <label><input type="checkbox" data-field="fruit" value="Melón chino"> Melón chino</label>
           <label><input type="checkbox" data-field="fruit" value="Melón verde"> Melón verde</label>
           <label><input type="checkbox" data-field="fruit" value="Pepino"> Pepino</label>
@@ -95,6 +113,7 @@ textarea{resize:vertical;min-height:70px}
 
         <label>Extras</label>
         <div class="group">
+          <label><input type="checkbox" data-field="extra" value="Chile Miguelito"> Chile Miguelito</label>
           <label><input type="checkbox" data-field="extra" value="Chile pica"> Chile pica</label>
           <label><input type="checkbox" data-field="extra" value="Chile no pica"> Chile no pica</label>
           <label><input type="checkbox" data-field="extra" value="Queso rallado"> Queso rallado</label>
@@ -120,7 +139,6 @@ textarea{resize:vertical;min-height:70px}
           <h3 style="margin:0">🍺 Caldo de oso</h3>
           <span class="badge">Ch $40 · G $60</span>
         </div>
-        <div class="muted">🥭 Mango suma $10 por unidad</div>
 
         <label>Tamaño</label>
         <select data-field="size">
@@ -132,7 +150,7 @@ textarea{resize:vertical;min-height:70px}
         <div class="group">
           <label><input type="checkbox" data-field="fruit" value="Sandía"> Sandía</label>
           <label><input type="checkbox" data-field="fruit" value="Piña"> Piña</label>
-          <label><input type="checkbox" data-field="fruit" value="Mango"> Mango (+$10 c/u)</label>
+          <label><input type="checkbox" data-field="fruit" value="Mango"> Mango</label>
           <label><input type="checkbox" data-field="fruit" value="Melón chino"> Melón chino</label>
           <label><input type="checkbox" data-field="fruit" value="Melón verde"> Melón verde</label>
           <label><input type="checkbox" data-field="fruit" value="Pepino"> Pepino</label>
@@ -252,6 +270,22 @@ textarea{resize:vertical;min-height:70px}
       <label>Observaciones generales (opcional)</label>
       <textarea id="generalNotes" placeholder="Ej: voy por él en 10 min, para llevar..."></textarea>
 
+      <!-- A DOMICILIO -->
+      <label style="margin-top:12px;font-weight:800">
+        <input type="checkbox" id="deliveryCheck" onchange="toggleDeliveryNote()">
+        A domicilio
+      </label>
+      <div id="deliveryNote" class="note" style="display:none">
+        🚚 Revisar las tarifas de envío según la zona.
+      </div>
+
+      <!-- TOTALES -->
+      <div class="totals">
+        <div class="trow"><span>Subtotal</span><strong id="subtotalVal">$0</strong></div>
+        <div class="trow"><span>Total</span><strong id="totalVal">$0</strong></div>
+        <div class="muted">* El envío se confirma por WhatsApp según la zona.</div>
+      </div>
+
       <button class="btn wa" type="button" onclick="checkoutWhatsApp()">📲 Realizar pedido por WhatsApp</button>
       <button class="btn danger" type="button" onclick="clearCart()">🗑️ Vaciar carrito</button>
     </div>
@@ -266,13 +300,13 @@ textarea{resize:vertical;min-height:70px}
     class="map-embed"
     loading="lazy"
     referrerpolicy="no-referrer-when-downgrade"
-    src="https://www.google.com/maps?q=BLVD%20HILARIO%20MEDINA%204613%20DEPORTIVA%201&output=embed">
+    src="https://www.google.com/maps?q=BLVD%20HILARIO%20MEDINA%204613%2C%20DEPORTIVA%201&z=17&output=embed">
   </iframe>
   <div class="map-actions">
     BLVD HILARIO MEDINA 4613, DEPORTIVA 1<br>
     <a target="_blank" rel="noopener"
-       href="https://www.google.com/maps/search/?api=1&query=BLVD%20HILARIO%20MEDINA%204613%20DEPORTIVA%201">
-      Abrir en Google Maps
+       href="https://www.google.com/maps/dir/?api=1&destination=BLVD%20HILARIO%20MEDINA%204613%2C%20DEPORTIVA%201">
+      Cómo llegar
     </a>
   </div>
 </div>
@@ -281,23 +315,19 @@ textarea{resize:vertical;min-height:70px}
   const WA_NUMBER = "5214774961901";
   let cart = [];
 
-  function qs(root, sel){ return root.querySelector(sel); }
   function qsa(root, sel){ return Array.from(root.querySelectorAll(sel)); }
-
   function getValues(rootId, field){
     const root = document.getElementById(rootId);
     return qsa(root, `[data-field="${field}"]:checked`).map(x => x.value);
   }
-
   function getInputValue(rootId, field){
     const root = document.getElementById(rootId);
-    const el = qs(root, `[data-field="${field}"]`);
+    const el = root.querySelector(`[data-field="${field}"]`);
     return el ? el.value : "";
   }
 
   function computeBasePrice(productName, sizeText){
     let price = 0;
-
     if(productName === "Fruta preparada"){
       if(sizeText.includes("Chico")) price = 35;
       else if(sizeText.includes("Mediano")) price = 45;
@@ -311,6 +341,13 @@ textarea{resize:vertical;min-height:70px}
     return price;
   }
 
+  function formatMoney(n){ return "$" + Math.round(n); }
+
+  function toggleDeliveryNote(){
+    const isChecked = document.getElementById("deliveryCheck").checked;
+    document.getElementById("deliveryNote").style.display = isChecked ? "block" : "none";
+  }
+
   function addToCart(product, rootId, hasSize, hasFruits){
     const size = hasSize ? getInputValue(rootId, "size") : "";
     const qty = Math.max(1, parseInt(getInputValue(rootId, "qty") || "1", 10) || 1);
@@ -321,14 +358,13 @@ textarea{resize:vertical;min-height:70px}
     const baseUnit = computeBasePrice(product, size);
     const mangoSelected = fruits.includes("Mango");
 
-    // ✅ Mango +10 POR UNIDAD
+    // Mango +10 POR UNIDAD
     const unitPrice = baseUnit + (mangoSelected ? 10 : 0);
 
     cart.push({
       id: (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random()),
       product, size, qty, fruits, extras, notes,
-      mangoSelected,
-      unitPrice
+      mangoSelected, unitPrice
     });
 
     renderCart();
@@ -344,6 +380,14 @@ textarea{resize:vertical;min-height:70px}
     renderCart();
   }
 
+  function computeTotals(){
+    const subtotal = cart.reduce((s, it) => s + (it.unitPrice * it.qty), 0);
+    const total = subtotal; // envío se confirma aparte
+    document.getElementById("subtotalVal").textContent = formatMoney(subtotal);
+    document.getElementById("totalVal").textContent = formatMoney(total);
+    return { subtotal, total };
+  }
+
   function renderCart(){
     const list = document.getElementById("cartList");
     const count = document.getElementById("cartCount");
@@ -351,14 +395,16 @@ textarea{resize:vertical;min-height:70px}
 
     if(cart.length === 0){
       list.innerHTML = `<div class="muted">Tu carrito está vacío. Agrega algo 👇</div>`;
+      document.getElementById("subtotalVal").textContent = "$0";
+      document.getElementById("totalVal").textContent = "$0";
       return;
     }
 
     list.innerHTML = cart.map((it, idx) => {
-      const totalItem = it.unitPrice * it.qty;
+      const itemSubtotal = it.unitPrice * it.qty;
 
       const lines = [];
-      lines.push(`x${it.qty} ${it.product} — $${totalItem}`);
+      lines.push(`Subtotal: ${formatMoney(itemSubtotal)}`);
       if(it.size) lines.push(`Tamaño: ${it.size}`);
       if(it.fruits.length){
         lines.push(`Frutas: ${it.fruits.join(", ")}${it.mangoSelected ? " (+ Mango $10 c/u)" : ""}`);
@@ -369,13 +415,15 @@ textarea{resize:vertical;min-height:70px}
       return `
         <div class="item">
           <div class="item-top">
-            <div><b>${idx+1}. ${it.product}</b></div>
+            <div><b>${idx+1}) x${it.qty} ${it.product}</b></div>
             <button class="mini" type="button" onclick="removeItem('${it.id}')">Quitar</button>
           </div>
           <div class="muted" style="margin-top:6px; white-space:pre-wrap">${lines.join("\n")}</div>
         </div>
       `;
     }).join("");
+
+    computeTotals();
   }
 
   function checkoutWhatsApp(){
@@ -386,15 +434,18 @@ textarea{resize:vertical;min-height:70px}
 
     const name = (document.getElementById("customerName").value || "").trim();
     const gNotes = (document.getElementById("generalNotes").value || "").trim();
+    const delivery = document.getElementById("deliveryCheck").checked;
+
+    const totals = computeTotals();
 
     let msg = "Hola, quiero pedir en FRUTÍSIMA MADRE:\n";
     if(name) msg += `Nombre: ${name}\n`;
     msg += "\n🧺 Pedido:\n";
 
     cart.forEach((it, i) => {
-      const totalItem = it.unitPrice * it.qty;
+      const itemSubtotal = it.unitPrice * it.qty;
 
-      msg += `${i+1}) x${it.qty} ${it.product} — $${totalItem}\n`;
+      msg += `${i+1}) x${it.qty} ${it.product} — Subtotal ${formatMoney(itemSubtotal)}\n`;
       if(it.size) msg += `   - Tamaño: ${it.size}\n`;
       if(it.fruits.length){
         msg += `   - Frutas: ${it.fruits.join(", ")}${it.mangoSelected ? " (+ Mango $10 c/u)" : ""}\n`;
@@ -402,6 +453,15 @@ textarea{resize:vertical;min-height:70px}
       msg += `   - Extras: ${(it.extras && it.extras.length) ? it.extras.join(", ") : "—"}\n`;
       if(it.notes) msg += `   - Observaciones: ${it.notes}\n`;
     });
+
+    msg += `\n💰 Subtotal: ${formatMoney(totals.subtotal)}\n`;
+    msg += `💰 Total: ${formatMoney(totals.total)}\n`;
+
+    if(delivery){
+      msg += `\n🚚 A domicilio: Sí (revisar tarifas de envío según la zona)\n`;
+    } else {
+      msg += `\n📍 A domicilio: No\n`;
+    }
 
     if(gNotes) msg += `\n📝 Observaciones generales: ${gNotes}\n`;
 
