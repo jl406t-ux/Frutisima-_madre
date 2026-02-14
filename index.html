@@ -67,6 +67,48 @@ textarea{resize:vertical;min-height:70px}
 .map-embed{width:100%;height:360px;border:0}
 .map-actions{padding:12px 14px 16px;font-size:14px}
 .map-actions a{display:inline-block;margin-top:8px;text-decoration:none;font-weight:800}
+
+/* BOTÓN FLOTANTE TOTAL */
+.fab{
+  position:fixed;
+  right:16px;
+  bottom:16px;
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 14px;
+  border-radius:999px;
+  border:1px solid #e5e7eb;
+  box-shadow:0 10px 24px rgba(0,0,0,.18);
+  background:#ffffff;
+  cursor:pointer;
+  user-select:none;
+}
+.fab strong{font-family:Poppins, Arial, sans-serif}
+.fab .pill{
+  background:#0f172a;
+  color:#fff;
+  padding:6px 10px;
+  border-radius:999px;
+  font-weight:800;
+  font-size:12px;
+}
+.fab .money{
+  font-weight:900;
+  font-size:14px;
+}
+.fab .muted2{
+  font-size:12px;
+  color:#6b7280;
+  margin-top:2px;
+}
+.fab .stack{
+  display:flex;
+  flex-direction:column;
+  line-height:1.1;
+}
+.fab-hide{display:none;}
 </style>
 </head>
 
@@ -84,13 +126,13 @@ textarea{resize:vertical;min-height:70px}
   <!-- PRODUCTOS -->
   <div class="products">
 
-    <!-- 1) FRUTA PREPARADA -->
+    <!-- 1) FRUTA PREPARADA (SIN PRECIO ROJO) -->
     <div class="card" id="prod-fruta">
       <img src="fruta.jpg" alt="Fruta preparada">
       <div class="content">
         <div class="top">
           <h3 style="margin:0">🍉 Fruta preparada</h3>
-          <span class="badge">Ch $35 · M $45 · G $60</span>
+          <!-- 👇 quitamos badge rojo -->
         </div>
 
         <label>Tamaño</label>
@@ -104,7 +146,7 @@ textarea{resize:vertical;min-height:70px}
         <div class="group">
           <label><input type="checkbox" data-field="fruit" value="Sandía"> Sandía</label>
           <label><input type="checkbox" data-field="fruit" value="Piña"> Piña</label>
-          <label><input type="checkbox" data-field="fruit" value="Mango"> Mango</label>
+          <label><input type="checkbox" data-field="fruit" value="Mango"> Mango (+$10)</label>
           <label><input type="checkbox" data-field="fruit" value="Melón chino"> Melón chino</label>
           <label><input type="checkbox" data-field="fruit" value="Melón verde"> Melón verde</label>
           <label><input type="checkbox" data-field="fruit" value="Pepino"> Pepino</label>
@@ -131,13 +173,13 @@ textarea{resize:vertical;min-height:70px}
       </div>
     </div>
 
-    <!-- 2) CALDO DE OSO -->
+    <!-- 2) CALDO DE OSO (SIN PRECIO ROJO) -->
     <div class="card" id="prod-caldo" style="margin-top:16px">
       <img src="caldo.jpg" alt="Caldo de oso">
       <div class="content">
         <div class="top">
           <h3 style="margin:0">🍺 Caldo de oso</h3>
-          <span class="badge">Ch $40 · G $60</span>
+          <!-- 👇 quitamos badge rojo -->
         </div>
 
         <label>Tamaño</label>
@@ -150,7 +192,7 @@ textarea{resize:vertical;min-height:70px}
         <div class="group">
           <label><input type="checkbox" data-field="fruit" value="Sandía"> Sandía</label>
           <label><input type="checkbox" data-field="fruit" value="Piña"> Piña</label>
-          <label><input type="checkbox" data-field="fruit" value="Mango"> Mango</label>
+          <label><input type="checkbox" data-field="fruit" value="Mango"> Mango (+$10)</label>
           <label><input type="checkbox" data-field="fruit" value="Melón chino"> Melón chino</label>
           <label><input type="checkbox" data-field="fruit" value="Melón verde"> Melón verde</label>
           <label><input type="checkbox" data-field="fruit" value="Pepino"> Pepino</label>
@@ -293,7 +335,7 @@ textarea{resize:vertical;min-height:70px}
 
 </div>
 
-<!-- MAPA / UBICACIÓN -->
+<!-- MAPA / UBICACIÓN (PIN CON COORDENADAS) -->
 <div class="map-card">
   <div class="map-title">📍 Ubicación</div>
 
@@ -305,19 +347,27 @@ textarea{resize:vertical;min-height:70px}
   </iframe>
 
   <div class="map-actions">
-    Blvd. Hilario Medina 4613, Unidad Deportiva, 37237 León de los Aldama, Gto.<br>
+    <b>Dirección:</b> Blvd. Hilario Medina 4613, Unidad Deportiva, 37237 León de los Aldama, Gto.<br>
     <a target="_blank" rel="noopener"
        href="https://www.google.com/maps/search/?api=1&query=21.1439,-101.6533">
       Abrir ubicación
     </a>
     <br>
     <a target="_blank" rel="noopener"
-       href="https://www.google.com/maps/dir/?api=1&destination=21.1439,-101.6533">
+       href="https://www.google.com/maps/dir/?api=1&destination=21.1439,-101.6533&travelmode=driving">
       Cómo llegar
     </a>
   </div>
 </div>
 
+<!-- BOTÓN FLOTANTE TOTAL -->
+<div id="fabTotal" class="fab fab-hide" onclick="goToCart()">
+  <span class="pill" id="fabCount">0</span>
+  <div class="stack">
+    <div><strong>Total</strong> <span class="money" id="fabMoney">$0</span></div>
+    <div class="muted2">Toca para ver carrito</div>
+  </div>
+</div>
 
 <script>
   const WA_NUMBER = "5214774961901";
@@ -356,6 +406,27 @@ textarea{resize:vertical;min-height:70px}
     document.getElementById("deliveryNote").style.display = isChecked ? "block" : "none";
   }
 
+  function goToCart(){
+    const cartEl = document.querySelector(".cart");
+    if(cartEl) cartEl.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+
+  function updateFab(total){
+    const fab = document.getElementById("fabTotal");
+    const count = document.getElementById("fabCount");
+    const money = document.getElementById("fabMoney");
+
+    if(cart.length === 0){
+      fab.classList.add("fab-hide");
+      count.textContent = "0";
+      money.textContent = "$0";
+      return;
+    }
+    fab.classList.remove("fab-hide");
+    count.textContent = String(cart.length);
+    money.textContent = formatMoney(total);
+  }
+
   function addToCart(product, rootId, hasSize, hasFruits){
     const size = hasSize ? getInputValue(rootId, "size") : "";
     const qty = Math.max(1, parseInt(getInputValue(rootId, "qty") || "1", 10) || 1);
@@ -364,9 +435,9 @@ textarea{resize:vertical;min-height:70px}
     const extras = getValues(rootId, "extra");
 
     const baseUnit = computeBasePrice(product, size);
-    const mangoSelected = fruits.includes("Mango");
 
-    // Mango +10 POR UNIDAD
+    // ✅ Mango suma +10 (si está seleccionado)
+    const mangoSelected = fruits.includes("Mango");
     const unitPrice = baseUnit + (mangoSelected ? 10 : 0);
 
     cart.push({
@@ -391,8 +462,12 @@ textarea{resize:vertical;min-height:70px}
   function computeTotals(){
     const subtotal = cart.reduce((s, it) => s + (it.unitPrice * it.qty), 0);
     const total = subtotal; // envío se confirma aparte
+
     document.getElementById("subtotalVal").textContent = formatMoney(subtotal);
     document.getElementById("totalVal").textContent = formatMoney(total);
+
+    updateFab(total); // ✅ actualiza el botón flotante en vivo
+
     return { subtotal, total };
   }
 
@@ -405,6 +480,7 @@ textarea{resize:vertical;min-height:70px}
       list.innerHTML = `<div class="muted">Tu carrito está vacío. Agrega algo 👇</div>`;
       document.getElementById("subtotalVal").textContent = "$0";
       document.getElementById("totalVal").textContent = "$0";
+      updateFab(0);
       return;
     }
 
@@ -415,7 +491,7 @@ textarea{resize:vertical;min-height:70px}
       lines.push(`Subtotal: ${formatMoney(itemSubtotal)}`);
       if(it.size) lines.push(`Tamaño: ${it.size}`);
       if(it.fruits.length){
-        lines.push(`Frutas: ${it.fruits.join(", ")}${it.mangoSelected ? " (+ Mango $10 c/u)" : ""}`);
+        lines.push(`Frutas: ${it.fruits.join(", ")}${it.mangoSelected ? " (+$10)" : ""}`);
       }
       lines.push(`Extras: ${(it.extras && it.extras.length) ? it.extras.join(", ") : "—"}`);
       if(it.notes) lines.push(`Obs: ${it.notes}`);
@@ -456,7 +532,7 @@ textarea{resize:vertical;min-height:70px}
       msg += `${i+1}) x${it.qty} ${it.product} — Subtotal ${formatMoney(itemSubtotal)}\n`;
       if(it.size) msg += `   - Tamaño: ${it.size}\n`;
       if(it.fruits.length){
-        msg += `   - Frutas: ${it.fruits.join(", ")}${it.mangoSelected ? " (+ Mango $10 c/u)" : ""}\n`;
+        msg += `   - Frutas: ${it.fruits.join(", ")}${it.mangoSelected ? " (+$10)" : ""}\n`;
       }
       msg += `   - Extras: ${(it.extras && it.extras.length) ? it.extras.join(", ") : "—"}\n`;
       if(it.notes) msg += `   - Observaciones: ${it.notes}\n`;
@@ -481,4 +557,3 @@ textarea{resize:vertical;min-height:70px}
 
 </body>
 </html>
-
