@@ -132,7 +132,6 @@ textarea{resize:vertical;min-height:70px}
       <div class="content">
         <div class="top">
           <h3 style="margin:0">🍉 Fruta preparada</h3>
-          <!-- 👇 quitamos badge rojo -->
         </div>
 
         <label>Tamaño</label>
@@ -179,7 +178,6 @@ textarea{resize:vertical;min-height:70px}
       <div class="content">
         <div class="top">
           <h3 style="margin:0">🍺 Caldo de oso</h3>
-          <!-- 👇 quitamos badge rojo -->
         </div>
 
         <label>Tamaño</label>
@@ -436,7 +434,7 @@ textarea{resize:vertical;min-height:70px}
 
     const baseUnit = computeBasePrice(product, size);
 
-    // ✅ Mango suma +10 (si está seleccionado)
+    // ✅ Mango suma +10 (si está seleccionado) POR UNIDAD
     const mangoSelected = fruits.includes("Mango");
     const unitPrice = baseUnit + (mangoSelected ? 10 : 0);
 
@@ -466,8 +464,7 @@ textarea{resize:vertical;min-height:70px}
     document.getElementById("subtotalVal").textContent = formatMoney(subtotal);
     document.getElementById("totalVal").textContent = formatMoney(total);
 
-    updateFab(total); // ✅ actualiza el botón flotante en vivo
-
+    updateFab(total);
     return { subtotal, total };
   }
 
@@ -491,7 +488,7 @@ textarea{resize:vertical;min-height:70px}
       lines.push(`Subtotal: ${formatMoney(itemSubtotal)}`);
       if(it.size) lines.push(`Tamaño: ${it.size}`);
       if(it.fruits.length){
-        lines.push(`Frutas: ${it.fruits.join(", ")}${it.mangoSelected ? " (+$10)" : ""}`);
+        lines.push(`Frutas: ${it.fruits.join(", ")}`); // ✅ sin precios
       }
       lines.push(`Extras: ${(it.extras && it.extras.length) ? it.extras.join(", ") : "—"}`);
       if(it.notes) lines.push(`Obs: ${it.notes}`);
@@ -510,6 +507,11 @@ textarea{resize:vertical;min-height:70px}
     computeTotals();
   }
 
+  function cleanSizeText(size){
+    // "Mediano ($45)" -> "Mediano"
+    return (size || "").replace(/\s*\(\$\d+\)\s*/g, "").trim();
+  }
+
   function checkoutWhatsApp(){
     if(cart.length === 0){
       alert("Tu carrito está vacío. Agrega al menos un producto.");
@@ -524,25 +526,28 @@ textarea{resize:vertical;min-height:70px}
 
     let msg = "Hola, quiero pedir en FRUTÍSIMA MADRE:\n";
     if(name) msg += `Nombre: ${name}\n`;
+
     msg += "\n🧺 Pedido:\n";
 
     cart.forEach((it, i) => {
       const itemSubtotal = it.unitPrice * it.qty;
 
-      msg += `${i+1}) x${it.qty} ${it.product} — Subtotal ${formatMoney(itemSubtotal)}\n`;
-      if(it.size) msg += `   - Tamaño: ${it.size}\n`;
-      if(it.fruits.length){
-        msg += `   - Frutas: ${it.fruits.join(", ")}${it.mangoSelected ? " (+$10)" : ""}\n`;
-      }
-      msg += `   - Extras: ${(it.extras && it.extras.length) ? it.extras.join(", ") : "—"}\n`;
+      msg += `${i+1}) x${it.qty} ${it.product}\n`;
+      if(it.size) msg += `   - Tamaño: ${cleanSizeText(it.size)}\n`;
+      if(it.fruits.length) msg += `   - Frutas: ${it.fruits.join(", ")}\n`;
+      if(it.extras && it.extras.length) msg += `   - Extras: ${it.extras.join(", ")}\n`;
       if(it.notes) msg += `   - Observaciones: ${it.notes}\n`;
+
+      // ✅ SOLO SUBTOTAL POR PRODUCTO
+      msg += `   Subtotal: ${formatMoney(itemSubtotal)}\n\n`;
     });
 
-    msg += `\n💰 Subtotal: ${formatMoney(totals.subtotal)}\n`;
+    // ✅ SOLO SUBTOTAL GENERAL Y TOTAL
+    msg += `💰 Subtotal general: ${formatMoney(totals.subtotal)}\n`;
     msg += `💰 Total: ${formatMoney(totals.total)}\n`;
 
     if(delivery){
-      msg += `\n🚚 A domicilio: Sí (revisar tarifas de envío según la zona)\n`;
+      msg += `\n🚚 A domicilio: Sí (revisar tarifa según zona)\n`;
     } else {
       msg += `\n📍 A domicilio: No\n`;
     }
