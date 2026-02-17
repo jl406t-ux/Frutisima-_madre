@@ -94,21 +94,10 @@ textarea{resize:vertical;min-height:70px}
   font-weight:800;
   font-size:12px;
 }
-.fab .money{
-  font-weight:900;
-  font-size:14px;
-}
-.fab .muted2{
-  font-size:12px;
-  color:#6b7280;
-  margin-top:2px;
-}
-.fab .stack{
-  display:flex;
-  flex-direction:column;
-  line-height:1.1;
-}
-.fab-hide{display:none;}
+.fab .money{font-weight:900;font-size:14px}
+.fab .muted2{font-size:12px;color:#6b7280;margin-top:2px}
+.fab .stack{display:flex;flex-direction:column;line-height:1.1}
+.fab-hide{display:none}
 </style>
 </head>
 
@@ -126,7 +115,7 @@ textarea{resize:vertical;min-height:70px}
   <!-- PRODUCTOS -->
   <div class="products">
 
-    <!-- 1) FRUTA PREPARADA (SIN PRECIO ROJO) -->
+    <!-- 1) FRUTA PREPARADA -->
     <div class="card" id="prod-fruta">
       <img src="fruta.jpg" alt="Fruta preparada">
       <div class="content">
@@ -172,7 +161,7 @@ textarea{resize:vertical;min-height:70px}
       </div>
     </div>
 
-    <!-- 2) CALDO DE OSO (SIN PRECIO ROJO) -->
+    <!-- 2) CALDO DE OSO -->
     <div class="card" id="prod-caldo" style="margin-top:16px">
       <img src="caldo.jpg" alt="Caldo de oso">
       <div class="content">
@@ -200,6 +189,7 @@ textarea{resize:vertical;min-height:70px}
         <label>Extras</label>
         <div class="group">
           <label><input type="checkbox" data-field="extra" value="Vinagre de piña"> Vinagre de piña</label>
+          <label><input type="checkbox" data-field="extra" value="Camarón seco"> Camarón seco (+$10)</label>
           <label><input type="checkbox" data-field="extra" value="Chile pica"> Chile pica</label>
           <label><input type="checkbox" data-field="extra" value="Chile no pica"> Chile no pica</label>
           <label><input type="checkbox" data-field="extra" value="Queso rallado"> Queso rallado</label>
@@ -241,6 +231,7 @@ textarea{resize:vertical;min-height:70px}
           <label><input type="checkbox" data-field="extra" value="Chile pica"> Chile pica</label>
           <label><input type="checkbox" data-field="extra" value="Chile no pica"> Chile no pica</label>
           <label><input type="checkbox" data-field="extra" value="Queso rallado"> Queso rallado</label>
+          <label><input type="checkbox" data-field="extra" value="Aguachile de camarón"> Aguachile de camarón (+$30)</label>
         </div>
 
         <label>Cantidad</label>
@@ -253,7 +244,45 @@ textarea{resize:vertical;min-height:70px}
       </div>
     </div>
 
-    <!-- 4) PAPAS LOCAS -->
+    <!-- 4) TOSTITOS (nuevo, mismos extras de Dorilocos) -->
+    <div class="card" id="prod-tostitos" style="margin-top:16px">
+      <img src="tostitos.jpg" alt="Tostitos">
+      <div class="content">
+        <div class="top">
+          <h3 style="margin:0">🟨 Tostitos</h3>
+          <span class="badge">$50</span>
+        </div>
+
+        <label>Extras</label>
+        <div class="group">
+          <label><input type="checkbox" data-field="extra" value="Cacahuate japonés"> Cacahuate japonés</label>
+          <label><input type="checkbox" data-field="extra" value="Cacahuate salado"> Cacahuate salado</label>
+          <label><input type="checkbox" data-field="extra" value="Churrito rojo"> Churrito rojo</label>
+          <label><input type="checkbox" data-field="extra" value="Cueritos"> Cueritos</label>
+          <label><input type="checkbox" data-field="extra" value="Pepino"> Pepino</label>
+          <label><input type="checkbox" data-field="extra" value="Jícama"> Jícama</label>
+          <label><input type="checkbox" data-field="extra" value="Limón"> Limón</label>
+          <label><input type="checkbox" data-field="extra" value="Salsa Don Vasco"> Salsa Don Vasco</label>
+          <label><input type="checkbox" data-field="extra" value="Salsa pico de gallo"> Salsa pico de gallo</label>
+          <label><input type="checkbox" data-field="extra" value="Salsa negra"> Salsa negra</label>
+          <label><input type="checkbox" data-field="extra" value="Chamoy de jamaica"> Chamoy de jamaica</label>
+          <label><input type="checkbox" data-field="extra" value="Chile pica"> Chile pica</label>
+          <label><input type="checkbox" data-field="extra" value="Chile no pica"> Chile no pica</label>
+          <label><input type="checkbox" data-field="extra" value="Queso rallado"> Queso rallado</label>
+          <label><input type="checkbox" data-field="extra" value="Aguachile de camarón"> Aguachile de camarón (+$30)</label>
+        </div>
+
+        <label>Cantidad</label>
+        <input type="number" data-field="qty" value="1" min="1">
+
+        <label>Observaciones</label>
+        <textarea data-field="notes" placeholder="Ej: con mucho queso..."></textarea>
+
+        <button class="btn add" type="button" onclick="addToCart('Tostitos','prod-tostitos',false,false)">➕ Agregar</button>
+      </div>
+    </div>
+
+    <!-- 5) PAPAS LOCAS -->
     <div class="card" id="prod-papas" style="margin-top:16px">
       <img src="papas.jpg" alt="Papas locas">
       <div class="content">
@@ -277,6 +306,7 @@ textarea{resize:vertical;min-height:70px}
           <label><input type="checkbox" data-field="extra" value="Chile pica"> Chile pica</label>
           <label><input type="checkbox" data-field="extra" value="Chile no pica"> Chile no pica</label>
           <label><input type="checkbox" data-field="extra" value="Queso rallado"> Queso rallado</label>
+          <label><input type="checkbox" data-field="extra" value="Aguachile de camarón"> Aguachile de camarón (+$30)</label>
         </div>
 
         <label>Cantidad</label>
@@ -310,7 +340,6 @@ textarea{resize:vertical;min-height:70px}
       <label>Observaciones generales (opcional)</label>
       <textarea id="generalNotes" placeholder="Ej: voy por él en 10 min, para llevar..."></textarea>
 
-      <!-- A DOMICILIO -->
       <label style="margin-top:12px;font-weight:800">
         <input type="checkbox" id="deliveryCheck" onchange="toggleDeliveryNote()">
         A domicilio
@@ -319,7 +348,6 @@ textarea{resize:vertical;min-height:70px}
         🚚 Revisar las tarifas de envío según la zona.
       </div>
 
-      <!-- TOTALES -->
       <div class="totals">
         <div class="trow"><span>Subtotal</span><strong id="subtotalVal">$0</strong></div>
         <div class="trow"><span>Total</span><strong id="totalVal">$0</strong></div>
@@ -333,28 +361,22 @@ textarea{resize:vertical;min-height:70px}
 
 </div>
 
-<!-- MAPA / UBICACIÓN (PIN CON COORDENADAS) -->
+<!-- MAPA -->
 <div class="map-card">
   <div class="map-title">📍 Ubicación</div>
-
   <iframe
     class="map-embed"
     loading="lazy"
     referrerpolicy="no-referrer-when-downgrade"
     src="https://maps.google.com/maps?q=21.1439,-101.6533&z=17&output=embed">
   </iframe>
-
   <div class="map-actions">
     <b>Dirección:</b> Blvd. Hilario Medina 4613, Unidad Deportiva, 37237 León de los Aldama, Gto.<br>
     <a target="_blank" rel="noopener"
-       href="https://www.google.com/maps/search/?api=1&query=21.1439,-101.6533">
-      Abrir ubicación
-    </a>
+       href="https://www.google.com/maps/search/?api=1&query=21.1439,-101.6533">Abrir ubicación</a>
     <br>
     <a target="_blank" rel="noopener"
-       href="https://www.google.com/maps/dir/?api=1&destination=21.1439,-101.6533&travelmode=driving">
-      Cómo llegar
-    </a>
+       href="https://www.google.com/maps/dir/?api=1&destination=21.1439,-101.6533&travelmode=driving">Cómo llegar</a>
   </div>
 </div>
 
@@ -369,6 +391,8 @@ textarea{resize:vertical;min-height:70px}
 
 <script>
   const WA_NUMBER = "5214774961901";
+  const EXTRA_CAMARON_SECO = "Camarón seco";
+  const EXTRA_AGUACHILE = "Aguachile de camarón";
   let cart = [];
 
   function qsa(root, sel){ return Array.from(root.querySelectorAll(sel)); }
@@ -391,7 +415,7 @@ textarea{resize:vertical;min-height:70px}
     } else if(productName === "Caldo de oso"){
       if(sizeText.includes("Chico")) price = 40;
       else if(sizeText.includes("Grande")) price = 60;
-    } else if(productName === "Dorilocos" || productName === "Papas locas"){
+    } else if(productName === "Dorilocos" || productName === "Papas locas" || productName === "Tostitos"){
       price = 50;
     }
     return price;
@@ -413,7 +437,6 @@ textarea{resize:vertical;min-height:70px}
     const fab = document.getElementById("fabTotal");
     const count = document.getElementById("fabCount");
     const money = document.getElementById("fabMoney");
-
     if(cart.length === 0){
       fab.classList.add("fab-hide");
       count.textContent = "0";
@@ -434,14 +457,20 @@ textarea{resize:vertical;min-height:70px}
 
     const baseUnit = computeBasePrice(product, size);
 
-    // ✅ Mango suma +10 (si está seleccionado) POR UNIDAD
+    // Mango +10 por unidad (si el producto trae frutas)
     const mangoSelected = fruits.includes("Mango");
-    const unitPrice = baseUnit + (mangoSelected ? 10 : 0);
+    let unitPrice = baseUnit + (mangoSelected ? 10 : 0);
+
+    // Caldo: Camarón seco +10 por unidad
+    if(product === "Caldo de oso" && extras.includes(EXTRA_CAMARON_SECO)) unitPrice += 10;
+
+    // Dorilocos/Tostitos/Papas: Aguachile +30 por unidad
+    if((product === "Dorilocos" || product === "Tostitos" || product === "Papas locas") && extras.includes(EXTRA_AGUACHILE)) unitPrice += 30;
 
     cart.push({
       id: (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random()),
       product, size, qty, fruits, extras, notes,
-      mangoSelected, unitPrice
+      unitPrice
     });
 
     renderCart();
@@ -459,11 +488,9 @@ textarea{resize:vertical;min-height:70px}
 
   function computeTotals(){
     const subtotal = cart.reduce((s, it) => s + (it.unitPrice * it.qty), 0);
-    const total = subtotal; // envío se confirma aparte
-
+    const total = subtotal;
     document.getElementById("subtotalVal").textContent = formatMoney(subtotal);
     document.getElementById("totalVal").textContent = formatMoney(total);
-
     updateFab(total);
     return { subtotal, total };
   }
@@ -483,13 +510,10 @@ textarea{resize:vertical;min-height:70px}
 
     list.innerHTML = cart.map((it, idx) => {
       const itemSubtotal = it.unitPrice * it.qty;
-
       const lines = [];
       lines.push(`Subtotal: ${formatMoney(itemSubtotal)}`);
       if(it.size) lines.push(`Tamaño: ${it.size}`);
-      if(it.fruits.length){
-        lines.push(`Frutas: ${it.fruits.join(", ")}`); // ✅ sin precios
-      }
+      if(it.fruits && it.fruits.length) lines.push(`Frutas: ${it.fruits.join(", ")}`);
       lines.push(`Extras: ${(it.extras && it.extras.length) ? it.extras.join(", ") : "—"}`);
       if(it.notes) lines.push(`Obs: ${it.notes}`);
 
@@ -508,7 +532,6 @@ textarea{resize:vertical;min-height:70px}
   }
 
   function cleanSizeText(size){
-    // "Mediano ($45)" -> "Mediano"
     return (size || "").replace(/\s*\(\$\d+\)\s*/g, "").trim();
   }
 
@@ -526,7 +549,6 @@ textarea{resize:vertical;min-height:70px}
 
     let msg = "Hola, quiero pedir en FRUTÍSIMA MADRE:\n";
     if(name) msg += `Nombre: ${name}\n`;
-
     msg += "\n🧺 Pedido:\n";
 
     cart.forEach((it, i) => {
@@ -534,23 +556,19 @@ textarea{resize:vertical;min-height:70px}
 
       msg += `${i+1}) x${it.qty} ${it.product}\n`;
       if(it.size) msg += `   - Tamaño: ${cleanSizeText(it.size)}\n`;
-      if(it.fruits.length) msg += `   - Frutas: ${it.fruits.join(", ")}\n`;
+      if(it.fruits && it.fruits.length) msg += `   - Frutas: ${it.fruits.join(", ")}\n`;
       if(it.extras && it.extras.length) msg += `   - Extras: ${it.extras.join(", ")}\n`;
       if(it.notes) msg += `   - Observaciones: ${it.notes}\n`;
 
-      // ✅ SOLO SUBTOTAL POR PRODUCTO
       msg += `   Subtotal: ${formatMoney(itemSubtotal)}\n\n`;
     });
 
-    // ✅ SOLO SUBTOTAL GENERAL Y TOTAL
     msg += `💰 Subtotal general: ${formatMoney(totals.subtotal)}\n`;
     msg += `💰 Total: ${formatMoney(totals.total)}\n`;
 
-    if(delivery){
-      msg += `\n🚚 A domicilio: Sí (revisar tarifa según zona)\n`;
-    } else {
-      msg += `\n📍 A domicilio: No\n`;
-    }
+    msg += delivery
+      ? `\n🚚 A domicilio: Sí (revisar tarifa según zona)\n`
+      : `\n📍 A domicilio: No\n`;
 
     if(gNotes) msg += `\n📝 Observaciones generales: ${gNotes}\n`;
 
