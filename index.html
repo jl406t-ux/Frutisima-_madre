@@ -231,7 +231,7 @@ textarea{resize:vertical;min-height:70px}
           <label><input type="checkbox" data-field="extra" value="Chile pica"> Chile pica</label>
           <label><input type="checkbox" data-field="extra" value="Chile no pica"> Chile no pica</label>
           <label><input type="checkbox" data-field="extra" value="Queso rallado"> Queso rallado</label>
-          <label><input type="checkbox" data-field="extra" value="Aguachile de camarón"> Aguachile de camarón (+$30)</label>
+          <label><input type="checkbox" data-field="extra" value="Aguachile de camarón"> Aguachile de camarón (+$40) (Miércoles de Ceniza y Viernes de Cuaresma)</label>
         </div>
 
         <label>Cantidad</label>
@@ -244,7 +244,7 @@ textarea{resize:vertical;min-height:70px}
       </div>
     </div>
 
-    <!-- 4) TOSTITOS (nuevo, mismos extras de Dorilocos) -->
+    <!-- 4) TOSTITOS -->
     <div class="card" id="prod-tostitos" style="margin-top:16px">
       <img src="tostitos.jpg" alt="Tostitos">
       <div class="content">
@@ -269,7 +269,7 @@ textarea{resize:vertical;min-height:70px}
           <label><input type="checkbox" data-field="extra" value="Chile pica"> Chile pica</label>
           <label><input type="checkbox" data-field="extra" value="Chile no pica"> Chile no pica</label>
           <label><input type="checkbox" data-field="extra" value="Queso rallado"> Queso rallado</label>
-          <label><input type="checkbox" data-field="extra" value="Aguachile de camarón"> Aguachile de camarón (+$30)</label>
+          <label><input type="checkbox" data-field="extra" value="Aguachile de camarón"> Aguachile de camarón (+$40) (Miércoles de Ceniza y Viernes de Cuaresma)</label>
         </div>
 
         <label>Cantidad</label>
@@ -306,7 +306,7 @@ textarea{resize:vertical;min-height:70px}
           <label><input type="checkbox" data-field="extra" value="Chile pica"> Chile pica</label>
           <label><input type="checkbox" data-field="extra" value="Chile no pica"> Chile no pica</label>
           <label><input type="checkbox" data-field="extra" value="Queso rallado"> Queso rallado</label>
-          <label><input type="checkbox" data-field="extra" value="Aguachile de camarón"> Aguachile de camarón (+$30)</label>
+          <label><input type="checkbox" data-field="extra" value="Aguachile de camarón"> Aguachile de camarón (+$40) (Miércoles de Ceniza y Viernes de Cuaresma)</label>
         </div>
 
         <label>Cantidad</label>
@@ -364,19 +364,13 @@ textarea{resize:vertical;min-height:70px}
 <!-- MAPA -->
 <div class="map-card">
   <div class="map-title">📍 Ubicación</div>
-  <iframe
-    class="map-embed"
-    loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade"
-    src="https://maps.google.com/maps?q=21.1439,-101.6533&z=17&output=embed">
-  </iframe>
+  <iframe class="map-embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+    src="https://maps.google.com/maps?q=21.1439,-101.6533&z=17&output=embed"></iframe>
   <div class="map-actions">
     <b>Dirección:</b> Blvd. Hilario Medina 4613, Unidad Deportiva, 37237 León de los Aldama, Gto.<br>
-    <a target="_blank" rel="noopener"
-       href="https://www.google.com/maps/search/?api=1&query=21.1439,-101.6533">Abrir ubicación</a>
+    <a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=21.1439,-101.6533">Abrir ubicación</a>
     <br>
-    <a target="_blank" rel="noopener"
-       href="https://www.google.com/maps/dir/?api=1&destination=21.1439,-101.6533&travelmode=driving">Cómo llegar</a>
+    <a target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=21.1439,-101.6533&travelmode=driving">Cómo llegar</a>
   </div>
 </div>
 
@@ -457,15 +451,11 @@ textarea{resize:vertical;min-height:70px}
 
     const baseUnit = computeBasePrice(product, size);
 
-    // Mango +10 por unidad (si el producto trae frutas)
     const mangoSelected = fruits.includes("Mango");
     let unitPrice = baseUnit + (mangoSelected ? 10 : 0);
 
-    // Caldo: Camarón seco +10 por unidad
     if(product === "Caldo de oso" && extras.includes(EXTRA_CAMARON_SECO)) unitPrice += 10;
-
-    // Dorilocos/Tostitos/Papas: Aguachile +30 por unidad
-    if((product === "Dorilocos" || product === "Tostitos" || product === "Papas locas") && extras.includes(EXTRA_AGUACHILE)) unitPrice += 30;
+    if((product === "Dorilocos" || product === "Tostitos" || product === "Papas locas") && extras.includes(EXTRA_AGUACHILE)) unitPrice += 40;
 
     cart.push({
       id: (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random()),
