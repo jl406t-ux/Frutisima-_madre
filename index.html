@@ -124,11 +124,6 @@ header{
   color:#fff;text-shadow:0 10px 26px rgba(0,0,0,.35);
 }
 .ad .copy h2{margin:0;font-size:18px;font-weight:1000;line-height:1.2}
-.ad .tag{
-  display:inline-flex;margin-top:10px;padding:8px 10px;border-radius:999px;
-  background:rgba(255,255,255,.92);color:#0b1220;border:1px solid rgba(255,255,255,.55);
-  font-size:12px;font-weight:1000;box-shadow:0 12px 26px rgba(0,0,0,.18);
-}
 
 /* CATEGORÍAS */
 .tabs{display:flex;gap:8px;flex-wrap:wrap;margin: 10px 0 16px}
@@ -363,13 +358,12 @@ textarea{resize:vertical;min-height:70px}
     </div>
   </header>
 
-  <!-- Publicidad -->
+  <!-- Publicidad (sin +$40) -->
   <section class="ad" aria-label="Promoción">
     <div class="media">
       <img src="tostittos.jpg" alt="Promoción Tostitos">
       <div class="copy">
         <h2>Este Miércoles de Ceniza y todos los viernes prueba nuestras botanas con aguachile de camarón</h2>
-        <div class="tag">🔥 Aguachile +$40</div>
       </div>
     </div>
   </section>
@@ -612,7 +606,7 @@ textarea{resize:vertical;min-height:70px}
 
 </div>
 
-<!-- TOAST (con botón Ver carrito) -->
+<!-- TOAST -->
 <div id="toast" class="toast" role="status" aria-live="polite">
   <span id="toastText">✅ Agregado al carrito</span>
   <button class="tbtn" type="button" onclick="openCart()">Ver carrito</button>
@@ -685,7 +679,6 @@ textarea{resize:vertical;min-height:70px}
 </div>
 
 <script>
-/* ========= CONFIG ========= */
 const WA_NUMBER = "5214774961901";
 const EXTRA_CAMARON_SECO = "Camarón seco";
 const EXTRA_AGUACHILE = "Aguachile de camarón";
@@ -693,7 +686,7 @@ const EXTRA_AGUACHILE = "Aguachile de camarón";
 let cart = [];
 let currentCategory = "all";
 
-/* ========= UI: CATEGORÍAS ========= */
+/* CATEGORÍAS */
 function setCategory(cat){
   currentCategory = cat;
   document.querySelectorAll(".tab").forEach(b=>{
@@ -709,7 +702,7 @@ function applyFilters(){
   });
 }
 
-/* ========= UI: DRAWER ========= */
+/* DRAWER */
 function openCart(){
   document.getElementById("drawer").classList.add("open");
   document.getElementById("overlay").classList.add("open");
@@ -727,14 +720,12 @@ function toggleDeliveryNote(){
   document.getElementById("deliveryNote").style.display = isChecked ? "block" : "none";
 }
 
-/* ========= TOAST ========= */
+/* TOAST */
 let toastTimer = null;
 function showToast(text){
   const t = document.getElementById("toast");
-  const tt = document.getElementById("toastText");
-  tt.textContent = text;
+  document.getElementById("toastText").textContent = text;
 
-  // vibración en celular (si el navegador lo permite)
   if (navigator.vibrate) navigator.vibrate(25);
 
   t.classList.add("show");
@@ -742,9 +733,8 @@ function showToast(text){
   toastTimer = setTimeout(()=> t.classList.remove("show"), 1700);
 }
 
-/* ========= HELPERS ========= */
+/* HELPERS */
 function qsa(root, sel){ return Array.from(root.querySelectorAll(sel)); }
-
 function getValues(rootId, field){
   const root = document.getElementById(rootId);
   return qsa(root, `[data-field="${field}"]:checked`).map(x => x.value);
@@ -759,7 +749,7 @@ function cleanSizeText(size){
   return (size || "").replace(/\s*\(\$\d+\)\s*/g, "").trim();
 }
 
-/* ========= PRICING ========= */
+/* PRICING */
 function computeBasePrice(productName, sizeText){
   let price = 0;
   if(productName === "Fruta preparada"){
@@ -775,8 +765,9 @@ function computeBasePrice(productName, sizeText){
   return price;
 }
 
-/* ========= CART ========= */
+/* CART */
 function addToCart(product, rootId, hasSize, hasFruits){
+  // ⚠️ IMPORTANTE: aquí NO se llama openCart()
   const size = hasSize ? getInputValue(rootId, "size") : "";
   const qty = Math.max(1, parseInt(getInputValue(rootId, "qty") || "1", 10) || 1);
   const notes = (getInputValue(rootId, "notes") || "").trim();
@@ -797,13 +788,10 @@ function addToCart(product, rootId, hasSize, hasFruits){
 
   cart.push({
     id: (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random()),
-    product, size, qty, fruits, extras, notes,
-    unitPrice
+    product, size, qty, fruits, extras, notes, unitPrice
   });
 
   renderCart();
-
-  // Toast pro: muestra resumen + botón ver carrito (sin abrirlo)
   showToast(`✅ Agregado: x${qty} ${product}`);
 }
 
@@ -832,18 +820,11 @@ function computeTotals(){
 
 function updateFab(total){
   const fab = document.getElementById("fabTotal");
-  const count = document.getElementById("fabCount");
-  const money = document.getElementById("fabMoney");
+  document.getElementById("fabCount").textContent = String(cart.length);
+  document.getElementById("fabMoney").textContent = formatMoney(total);
 
-  if(cart.length === 0){
-    fab.classList.add("fab-hide");
-    count.textContent = "0";
-    money.textContent = "$0";
-    return;
-  }
-  fab.classList.remove("fab-hide");
-  count.textContent = String(cart.length);
-  money.textContent = formatMoney(total);
+  if(cart.length === 0) fab.classList.add("fab-hide");
+  else fab.classList.remove("fab-hide");
 }
 
 function renderCart(){
@@ -882,7 +863,7 @@ function renderCart(){
   computeTotals();
 }
 
-/* ========= WHATSAPP ========= */
+/* WHATSAPP */
 function checkoutWhatsApp(){
   if(cart.length === 0){
     alert("Tu carrito está vacío. Agrega al menos un producto.");
