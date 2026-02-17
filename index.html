@@ -47,7 +47,7 @@ header{
   align-items:center;
   justify-content:space-between;
   gap:12px;
-  margin-bottom:10px;
+  margin-bottom:12px;
 }
 .brand{
   display:flex;
@@ -55,7 +55,7 @@ header{
   gap:12px;
 }
 .brand img{
-  width:min(280px, 60vw);
+  width:min(320px, 70vw);
   height:auto;
   filter: drop-shadow(0 10px 18px rgba(0,0,0,.15));
 }
@@ -92,28 +92,69 @@ header{
   font-size:12px;
 }
 
-.hero{
-  text-align:center;
-  margin: 4px 0 14px;
+/* PUBLICIDAD */
+.ad{
+  background: var(--card);
+  border:1px solid rgba(229,231,235,.92);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+  margin: 10px 0 16px;
 }
-.hero h1{margin:0;font-size:28px}
-.hero h2{margin:6px 0 0;color:var(--muted);font-size:14px;font-weight:600}
+.ad .media{
+  position:relative;
+  width:100%;
+  height:260px;
+  overflow:hidden;
+}
+.ad .media img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.ad .media::after{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(to top, rgba(15,23,42,.72), rgba(15,23,42,.08) 60%, transparent);
+}
+.ad .copy{
+  position:absolute;
+  left:14px; right:14px; bottom:14px;
+  z-index:2;
+  color:#fff;
+  text-shadow:0 10px 26px rgba(0,0,0,.35);
+}
+.ad .copy h2{
+  margin:0;
+  font-size:20px;
+  font-weight:1000;
+}
+.ad .copy p{
+  margin:8px 0 0;
+  font-size:13px;
+  font-weight:800;
+  opacity:.95;
+  line-height:1.35;
+}
+.ad .tag{
+  display:inline-flex;
+  margin-top:10px;
+  padding:8px 10px;
+  border-radius:999px;
+  background:rgba(255,255,255,.92);
+  color:#0b1220;
+  border:1px solid rgba(255,255,255,.55);
+  font-size:12px;
+  font-weight:1000;
+  box-shadow:0 12px 26px rgba(0,0,0,.18);
+}
 
-/* TOP BAR (tabs + search) */
-.topbar{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  margin: 14px 0 16px;
-}
-@media(min-width:820px){
-  .topbar{flex-direction:row;align-items:center;justify-content:space-between}
-}
-
+/* CATEGORÍAS (sin buscador) */
 .tabs{
   display:flex;
   gap:8px;
   flex-wrap:wrap;
+  margin: 10px 0 16px;
 }
 .tab{
   border:1px solid rgba(229,231,235,.95);
@@ -130,25 +171,6 @@ header{
   border-color:rgba(0,0,0,.05);
 }
 .tab:hover{box-shadow:var(--shadow2)}
-
-.search{
-  display:flex;
-  gap:10px;
-  align-items:center;
-  width:100%;
-}
-@media(min-width:820px){.search{width:420px}}
-.search input{
-  width:100%;
-  padding:12px 12px;
-  border-radius:14px;
-  border:1px solid #d1d5db;
-  outline:none;
-}
-.search input:focus{
-  border-color: rgba(34,197,94,.65);
-  box-shadow: 0 0 0 4px rgba(34,197,94,.16);
-}
 
 /* GRID PRODUCTS */
 .grid{
@@ -170,7 +192,7 @@ header{
 .media{
   position:relative;
   width:100%;
-  height:210px; /* uniforme */
+  height:210px;
   overflow:hidden;
 }
 .media img{
@@ -462,6 +484,7 @@ textarea{resize:vertical;min-height:70px}
 <body>
 <div class="container">
 
+  <!-- LOGO al principio -->
   <header>
     <div class="brand">
       <img src="logo.jpg" alt="Frutísima Madre">
@@ -473,27 +496,29 @@ textarea{resize:vertical;min-height:70px}
     </div>
   </header>
 
-  <div class="hero">
-    <h1>Menú</h1>
-    <h2>Uber Eats de barrio 😈 — categorías, búsqueda y carrito lateral</h2>
-  </div>
-
-  <div class="topbar">
-    <div class="tabs">
-      <button class="tab active" type="button" data-cat="all" onclick="setCategory('all')">Todo</button>
-      <button class="tab" type="button" data-cat="fruta" onclick="setCategory('fruta')">Fruta</button>
-      <button class="tab" type="button" data-cat="caldo" onclick="setCategory('caldo')">Caldo</button>
-      <button class="tab" type="button" data-cat="botanas" onclick="setCategory('botanas')">Botanas</button>
+  <!-- Publicidad (usa tostittos.jpg) -->
+  <section class="ad" aria-label="Promoción">
+    <div class="media">
+      <img src="tostittos.jpg" alt="Promoción Tostitos">
+      <div class="copy">
+        <h2>Prueba hoy</h2>
+        <p>Miércoles de Ceniza y todos los viernes: nuestras botanas con <b>aguachile de camarón</b>.</p>
+        <div class="tag">🔥 Aguachile +$40</div>
+      </div>
     </div>
+  </section>
 
-    <div class="search">
-      <input id="searchInput" type="text" placeholder="Buscar: fruta, dorilocos, tostitos..." oninput="applyFilters()">
-    </div>
+  <!-- CATEGORÍAS (sin buscador) -->
+  <div class="tabs">
+    <button class="tab active" type="button" data-cat="all" onclick="setCategory('all')">Todo</button>
+    <button class="tab" type="button" data-cat="fruta" onclick="setCategory('fruta')">Fruta</button>
+    <button class="tab" type="button" data-cat="caldo" onclick="setCategory('caldo')">Caldo</button>
+    <button class="tab" type="button" data-cat="botanas" onclick="setCategory('botanas')">Botanas</button>
   </div>
 
   <div class="grid" id="productGrid">
 
-    <!-- FRUTA PREPARADA (cat: fruta) -->
+    <!-- FRUTA PREPARADA -->
     <div class="card product" id="prod-fruta" data-cat="fruta" data-name="fruta preparada">
       <div class="media">
         <img src="fruta.jpg" alt="Fruta preparada">
@@ -541,7 +566,7 @@ textarea{resize:vertical;min-height:70px}
       </div>
     </div>
 
-    <!-- CALDO DE OSO (cat: caldo) -->
+    <!-- CALDO DE OSO -->
     <div class="card product" id="prod-caldo" data-cat="caldo" data-name="caldo de oso">
       <div class="media">
         <img src="caldo.jpg" alt="Caldo de oso">
@@ -588,7 +613,7 @@ textarea{resize:vertical;min-height:70px}
       </div>
     </div>
 
-    <!-- DORILOCOS (cat: botanas) -->
+    <!-- DORILOCOS -->
     <div class="card product" id="prod-dori" data-cat="botanas" data-name="dorilocos">
       <div class="media">
         <img src="dorilocos.jpg" alt="Dorilocos">
@@ -627,7 +652,7 @@ textarea{resize:vertical;min-height:70px}
       </div>
     </div>
 
-    <!-- TOSTITOS (cat: botanas) -->
+    <!-- TOSTITOS (producto) -->
     <div class="card product" id="prod-tostitos" data-cat="botanas" data-name="tostitos">
       <div class="media">
         <img src="tostitos.jpg" alt="Tostitos">
@@ -666,7 +691,7 @@ textarea{resize:vertical;min-height:70px}
       </div>
     </div>
 
-    <!-- PAPAS LOCAS (cat: botanas) -->
+    <!-- PAPAS LOCAS -->
     <div class="card product" id="prod-papas" data-cat="botanas" data-name="papas locas">
       <div class="media">
         <img src="papas.jpg" alt="Papas locas">
@@ -734,7 +759,7 @@ textarea{resize:vertical;min-height:70px}
   </div>
 
   <div class="drawer-body">
-    <div class="muted">Mandamos a WhatsApp: sin precios por ítem, solo subtotales y total.</div>
+    <div class="muted">WhatsApp: sin precios por ítem, solo subtotales y total.</div>
 
     <div class="cart-list" id="cartList"></div>
 
@@ -764,8 +789,10 @@ textarea{resize:vertical;min-height:70px}
     <button class="btn btn-danger" type="button" onclick="clearCart()">🗑️ Vaciar carrito</button>
 
     <div class="small-note">
-      ✅ Archivos de imágenes (exacto en minúsculas):<br>
-      <b>logo.jpg</b>, <b>fruta.jpg</b>, <b>caldo.jpg</b>, <b>dorilocos.jpg</b>, <b>tostitos.jpg</b>, <b>papas.jpg</b>
+      ✅ Archivos (exacto minúsculas):<br>
+      <b>logo.jpg</b><br>
+      Publicidad: <b>tostittos.jpg</b><br>
+      Productos: <b>fruta.jpg</b>, <b>caldo.jpg</b>, <b>dorilocos.jpg</b>, <b>tostitos.jpg</b>, <b>papas.jpg</b>
     </div>
   </div>
 </div>
@@ -776,7 +803,7 @@ textarea{resize:vertical;min-height:70px}
     <div class="dot" id="fabCount">0</div>
     <div class="meta">
       <strong>Ver carrito</strong>
-      <span>Se actualiza en vivo</span>
+      <span>Subtotal en vivo</span>
     </div>
   </div>
   <div class="right">
@@ -794,7 +821,7 @@ const EXTRA_AGUACHILE = "Aguachile de camarón";
 let cart = [];
 let currentCategory = "all";
 
-/* ========= UI: FILTERS ========= */
+/* ========= UI: CATEGORÍAS ========= */
 function setCategory(cat){
   currentCategory = cat;
   document.querySelectorAll(".tab").forEach(b=>{
@@ -802,17 +829,12 @@ function setCategory(cat){
   });
   applyFilters();
 }
-
 function applyFilters(){
-  const q = (document.getElementById("searchInput").value || "").trim().toLowerCase();
+  // sin buscador: solo filtra por categoría
   document.querySelectorAll(".product").forEach(card=>{
-    const name = (card.dataset.name || "").toLowerCase();
     const cat = (card.dataset.cat || "all").toLowerCase();
-
     const catOK = (currentCategory === "all") || (cat === currentCategory);
-    const qOK = !q || name.includes(q);
-
-    card.style.display = (catOK && qOK) ? "" : "none";
+    card.style.display = catOK ? "" : "none";
   });
 }
 
@@ -894,14 +916,13 @@ function addToCart(product, rootId, hasSize, hasFruits){
   });
 
   renderCart();
-  openCart(); // se siente pro: agregas y se abre carrito
+  openCart();
 }
 
 function removeItem(id){
   cart = cart.filter(x => x.id !== id);
   renderCart();
 }
-
 function clearCart(){
   cart = [];
   renderCart();
@@ -914,7 +935,6 @@ function computeTotals(){
   document.getElementById("subtotalVal").textContent = formatMoney(subtotal);
   document.getElementById("totalVal").textContent = formatMoney(total);
 
-  // Header + FAB
   document.getElementById("headerCount").textContent = String(cart.length);
   document.getElementById("cartCount").textContent = String(cart.length);
 
