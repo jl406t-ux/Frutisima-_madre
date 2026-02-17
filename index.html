@@ -1,128 +1,508 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>FRUTÍSIMA MADRE</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
-body{margin:0;font-family:Inter,Arial,sans-serif;background:#f6f7f9;padding:16px}
-header{max-width:900px;margin:0 auto 16px;display:flex;justify-content:center}
-header img{max-width:260px;width:70%;height:auto}
-h1,h2,h3{font-family:Poppins,Arial,sans-serif}
-h1{text-align:center;margin:8px 0}
-h2{text-align:center;color:#555;margin-top:4px;font-weight:600}
+:root{
+  --bg:#f6f7f9;
+  --card:#ffffff;
+  --text:#0b1220;
+  --muted:#6b7280;
+  --line:#e5e7eb;
 
-.wrap{max-width:900px;margin:auto;display:grid;grid-template-columns:1fr;gap:16px}
-@media(min-width:980px){.wrap{grid-template-columns:1.4fr .9fr}.cart{position:sticky;top:12px}}
+  --primary:#22c55e;
+  --primary2:#16a34a;
+  --dark:#0f172a;
+  --danger:#ef4444;
 
-.card{background:#fff;border-radius:14px;box-shadow:0 4px 14px rgba(0,0,0,.08);overflow:hidden;border:1px solid #eee}
-.card img{width:100%;height:220px;object-fit:cover}
+  --shadow:0 10px 28px rgba(15,23,42,.10);
+  --shadow2:0 14px 36px rgba(15,23,42,.14);
+  --radius:16px;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(900px 420px at 10% -10%, rgba(34,197,94,.16), transparent 55%),
+    radial-gradient(900px 420px at 90% -10%, rgba(239,68,68,.10), transparent 55%),
+    var(--bg);
+  padding:18px;
+}
+
+h1,h2,h3{font-family:Poppins,Inter,sans-serif}
+
+.container{max-width:1100px;margin:0 auto}
+
+/* HEADER */
+header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:10px;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.brand img{
+  width:min(280px, 60vw);
+  height:auto;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,.15));
+}
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.icon-btn{
+  border:1px solid rgba(229,231,235,.95);
+  background:rgba(255,255,255,.9);
+  border-radius:14px;
+  padding:10px 12px;
+  box-shadow: var(--shadow);
+  cursor:pointer;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.icon-btn:hover{box-shadow:var(--shadow2)}
+.pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:28px;
+  height:28px;
+  padding:0 10px;
+  border-radius:999px;
+  background:rgba(34,197,94,.14);
+  border:1px solid rgba(34,197,94,.2);
+  color:#065f46;
+  font-weight:1000;
+  font-size:12px;
+}
+
+.hero{
+  text-align:center;
+  margin: 4px 0 14px;
+}
+.hero h1{margin:0;font-size:28px}
+.hero h2{margin:6px 0 0;color:var(--muted);font-size:14px;font-weight:600}
+
+/* TOP BAR (tabs + search) */
+.topbar{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin: 14px 0 16px;
+}
+@media(min-width:820px){
+  .topbar{flex-direction:row;align-items:center;justify-content:space-between}
+}
+
+.tabs{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.tab{
+  border:1px solid rgba(229,231,235,.95);
+  background:rgba(255,255,255,.9);
+  border-radius:999px;
+  padding:10px 12px;
+  font-weight:1000;
+  cursor:pointer;
+  box-shadow: var(--shadow);
+}
+.tab.active{
+  background:linear-gradient(135deg, var(--dark), #111827);
+  color:#fff;
+  border-color:rgba(0,0,0,.05);
+}
+.tab:hover{box-shadow:var(--shadow2)}
+
+.search{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  width:100%;
+}
+@media(min-width:820px){.search{width:420px}}
+.search input{
+  width:100%;
+  padding:12px 12px;
+  border-radius:14px;
+  border:1px solid #d1d5db;
+  outline:none;
+}
+.search input:focus{
+  border-color: rgba(34,197,94,.65);
+  box-shadow: 0 0 0 4px rgba(34,197,94,.16);
+}
+
+/* GRID PRODUCTS */
+.grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+}
+@media(min-width:720px){.grid{grid-template-columns:1fr 1fr}}
+@media(min-width:1040px){.grid{grid-template-columns:1fr 1fr 1fr}}
+
+.card{
+  background:var(--card);
+  border:1px solid rgba(229,231,235,.92);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.card:hover{box-shadow:var(--shadow2)}
+.media{
+  position:relative;
+  width:100%;
+  height:210px; /* uniforme */
+  overflow:hidden;
+}
+.media img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transform:scale(1.02);
+}
+.media::after{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(to top, rgba(15,23,42,.55), rgba(15,23,42,.06) 60%, transparent);
+}
+.titlebar{
+  position:absolute;
+  left:14px; right:14px; bottom:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:10px;
+  z-index:2;
+}
+.ptitle{
+  color:#fff;
+  font-weight:1000;
+  font-size:18px;
+  line-height:1.1;
+  text-shadow:0 8px 24px rgba(0,0,0,.35);
+}
+.badge{
+  background:rgba(255,255,255,.95);
+  color:#0b1220;
+  padding:8px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:1000;
+  border:1px solid rgba(255,255,255,.65);
+  box-shadow:0 10px 24px rgba(0,0,0,.18);
+  white-space:nowrap;
+}
+
 .content{padding:14px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.badge{background:#ef4444;color:#fff;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap}
 
-label{display:block;margin-top:10px;font-weight:700;font-size:14px}
-select,input,textarea{width:100%;margin-top:6px;padding:10px;border-radius:10px;border:1px solid #ccc;box-sizing:border-box}
+label{
+  display:block;
+  margin-top:10px;
+  font-weight:900;
+  font-size:13px;
+  color:#111827;
+}
+select,input,textarea{
+  width:100%;
+  margin-top:6px;
+  padding:11px 12px;
+  border-radius:12px;
+  border:1px solid #d1d5db;
+  background:#fff;
+  outline:none;
+}
+select:focus,input:focus,textarea:focus{
+  border-color: rgba(34,197,94,.65);
+  box-shadow: 0 0 0 4px rgba(34,197,94,.16);
+}
 textarea{resize:vertical;min-height:70px}
-.group{margin-top:6px}
-.group label{font-weight:500;margin-top:6px}
 
-.btn{width:100%;margin-top:12px;padding:14px;border:none;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer}
-.add{background:#0f172a;color:#fff}
-.wa{background:#22c55e;color:#000}
-.danger{background:#ef4444;color:#fff}
+.group{
+  margin-top:6px;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:6px;
+}
+@media(min-width:520px){
+  .group.two{grid-template-columns:1fr 1fr;}
+}
+.group label{
+  margin:0;
+  font-weight:600;
+  font-size:13px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 10px;
+  border-radius:12px;
+  border:1px solid rgba(229,231,235,.92);
+  background:#fff;
+}
+.group label:hover{background:#f8fafc}
+.group input{width:auto;margin:0;accent-color:var(--primary)}
 
-.cart-list{margin-top:10px;display:flex;flex-direction:column;gap:10px}
-.item{border:1px solid #eee;border-radius:10px;padding:10px;background:#fff}
+.btn{
+  width:100%;
+  margin-top:12px;
+  padding:14px 14px;
+  border:none;
+  border-radius:14px;
+  font-size:15px;
+  font-weight:1000;
+  cursor:pointer;
+  transition: transform .06s ease, filter .15s ease, box-shadow .15s ease;
+}
+.btn:active{transform:translateY(1px)}
+.add{
+  background: linear-gradient(135deg, var(--dark), #111827);
+  color:#fff;
+  box-shadow:0 12px 24px rgba(15,23,42,.18);
+}
+.add:hover{filter:brightness(1.06)}
+.small-note{
+  margin-top:10px;
+  color:var(--muted);
+  font-size:12px;
+  background:#fafafa;
+  border:1px solid rgba(229,231,235,.92);
+  border-radius:12px;
+  padding:10px 12px;
+}
+
+/* MAPA */
+.map-card{
+  background:var(--card);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  margin: 18px auto 10px;
+  border:1px solid rgba(229,231,235,.9);
+}
+.map-title{padding:12px 14px;font-family:Poppins,Inter,sans-serif;font-weight:1000}
+.map-embed{width:100%;height:360px;border:0}
+.map-actions{padding:12px 14px 16px;font-size:14px;color:#111827}
+.map-actions a{display:inline-block;margin-top:8px;text-decoration:none;font-weight:1000;color:#064e3b}
+
+/* DRAWER CART */
+.overlay{
+  position:fixed; inset:0;
+  background:rgba(15,23,42,.55);
+  opacity:0; pointer-events:none;
+  transition:.18s ease;
+  z-index: 9998;
+}
+.drawer{
+  position:fixed;
+  top:0; right:0;
+  height:100%;
+  width:min(420px, 92vw);
+  background:rgba(255,255,255,.98);
+  border-left:1px solid rgba(229,231,235,.95);
+  box-shadow:-20px 0 50px rgba(15,23,42,.20);
+  transform:translateX(105%);
+  transition:.22s ease;
+  z-index:9999;
+  display:flex;
+  flex-direction:column;
+}
+.drawer.open{transform:translateX(0)}
+.overlay.open{opacity:1; pointer-events:auto}
+
+.drawer-head{
+  padding:14px 14px 10px;
+  border-bottom:1px solid rgba(229,231,235,.95);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.drawer-head h3{margin:0;font-size:18px}
+.close-btn{
+  border:1px solid rgba(229,231,235,.95);
+  background:#fff;
+  border-radius:12px;
+  padding:10px 12px;
+  cursor:pointer;
+  font-weight:1000;
+}
+.drawer-body{
+  padding:12px 14px 14px;
+  overflow:auto;
+  flex:1;
+}
+.cart-count{
+  background: rgba(34,197,94,.14);
+  color:#065f46;
+  padding:8px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:1000;
+  border:1px solid rgba(34,197,94,.20);
+}
+.muted{font-size:12px;color:var(--muted);margin-top:8px}
+
+.cart-list{margin-top:12px;display:flex;flex-direction:column;gap:10px}
+.item{
+  border:1px solid rgba(229,231,235,.92);
+  border-radius:14px;
+  padding:10px;
+  background:#fff;
+}
 .item-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-.muted{font-size:12px;color:#666;margin-top:6px}
-.mini{padding:6px 10px;border-radius:8px;border:1px solid #ccc;cursor:pointer;background:#fafafa}
-.divider{height:1px;background:#eee;margin:12px 0}
+.mini{
+  padding:8px 10px;
+  border-radius:12px;
+  border:1px solid rgba(229,231,235,.92);
+  cursor:pointer;
+  background:#f8fafc;
+  font-weight:1000;
+}
+.mini:hover{background:#eef2f7}
+.divider{height:1px;background:rgba(229,231,235,.95);margin:14px 0}
 
 .totals{
-  border:1px dashed #ddd;
-  border-radius:12px;
-  padding:10px;
-  margin-top:10px;
-  background:#fafafa;
+  border:1px dashed rgba(209,213,219,.95);
+  border-radius:14px;
+  padding:10px 12px;
+  background:#f8fafc;
   font-size:14px;
 }
-.trow{display:flex;justify-content:space-between;gap:10px;margin:6px 0}
-.trow strong{font-family:Poppins,Arial,sans-serif}
+.trow{display:flex;justify-content:space-between;gap:10px;margin:8px 0}
+.trow strong{font-family:Poppins,Inter,sans-serif}
 .note{
   margin-top:8px;
-  padding:10px;
-  border-radius:10px;
+  padding:10px 12px;
+  border-radius:14px;
   background:#fff7ed;
   border:1px solid #fed7aa;
   font-size:13px;
 }
 
-/* MAPA */
-.map-card{background:#fff;border-radius:14px;box-shadow:0 4px 14px rgba(0,0,0,.08);overflow:hidden;margin:18px auto 8px;max-width:900px;border:1px solid #eee}
-.map-title{padding:12px 14px;font-family:Poppins,Arial,sans-serif;font-weight:700}
-.map-embed{width:100%;height:360px;border:0}
-.map-actions{padding:12px 14px 16px;font-size:14px}
-.map-actions a{display:inline-block;margin-top:8px;text-decoration:none;font-weight:800}
+/* drawer buttons */
+.btn-wa{
+  background: linear-gradient(135deg, var(--primary), var(--primary2));
+  color:#00130a;
+  box-shadow:0 12px 24px rgba(34,197,94,.26);
+}
+.btn-wa:hover{filter:brightness(1.04)}
+.btn-danger{
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color:#fff;
+  box-shadow:0 12px 24px rgba(239,68,68,.20);
+}
+.btn-danger:hover{filter:brightness(1.03)}
 
-/* BOTÓN FLOTANTE TOTAL */
+/* FAB bottom */
 .fab{
   position:fixed;
-  right:16px;
-  bottom:16px;
-  z-index:9999;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:14px;
+  z-index: 9000;
+  width:min(560px, calc(100vw - 24px));
+  background:rgba(255,255,255,.96);
+  border:1px solid rgba(229,231,235,.92);
+  box-shadow:0 18px 45px rgba(15,23,42,.22);
+  border-radius:999px;
+  padding:10px 12px;
   display:flex;
   align-items:center;
+  justify-content:space-between;
   gap:10px;
-  padding:12px 14px;
-  border-radius:999px;
-  border:1px solid #e5e7eb;
-  box-shadow:0 10px 24px rgba(0,0,0,.18);
-  background:#ffffff;
+  backdrop-filter: blur(10px);
   cursor:pointer;
-  user-select:none;
 }
-.fab strong{font-family:Poppins, Arial, sans-serif}
-.fab .pill{
-  background:#0f172a;
-  color:#fff;
-  padding:6px 10px;
-  border-radius:999px;
-  font-weight:800;
-  font-size:12px;
-}
-.fab .money{font-weight:900;font-size:14px}
-.fab .muted2{font-size:12px;color:#6b7280;margin-top:2px}
-.fab .stack{display:flex;flex-direction:column;line-height:1.1}
 .fab-hide{display:none}
+.fab .left{display:flex;align-items:center;gap:10px}
+.fab .dot{
+  width:44px;height:44px;border-radius:999px;
+  background:linear-gradient(135deg, var(--primary), var(--primary2));
+  display:grid;place-items:center;
+  box-shadow:0 14px 30px rgba(34,197,94,.28);
+  color:#00130a;
+  font-weight:1000;
+}
+.fab .meta{display:flex;flex-direction:column;line-height:1.15}
+.fab .meta strong{font-family:Poppins,Inter,sans-serif;font-size:14px}
+.fab .meta span{font-size:12px;color:var(--muted);font-weight:800}
+.fab .right{display:flex;align-items:center;gap:10px}
+.fab .money{font-family:Poppins,Inter,sans-serif;font-weight:1000;font-size:16px}
+.fab .cta{
+  padding:10px 12px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  font-weight:1000;
+  background:linear-gradient(135deg, var(--dark), #111827);
+  color:#fff;
+}
+.fab .cta:active{transform:translateY(1px)}
 </style>
 </head>
 
 <body>
+<div class="container">
 
-<header>
-  <img src="logo.jpg" alt="Frutísima Madre">
-</header>
+  <header>
+    <div class="brand">
+      <img src="logo.jpg" alt="Frutísima Madre">
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" type="button" onclick="openCart()">
+        🧺 Carrito <span class="pill" id="headerCount">0</span>
+      </button>
+    </div>
+  </header>
 
-<h1>Menú</h1>
-<h2>Arma tu pedido y envíalo por WhatsApp</h2>
+  <div class="hero">
+    <h1>Menú</h1>
+    <h2>Uber Eats de barrio 😈 — categorías, búsqueda y carrito lateral</h2>
+  </div>
 
-<div class="wrap">
+  <div class="topbar">
+    <div class="tabs">
+      <button class="tab active" type="button" data-cat="all" onclick="setCategory('all')">Todo</button>
+      <button class="tab" type="button" data-cat="fruta" onclick="setCategory('fruta')">Fruta</button>
+      <button class="tab" type="button" data-cat="caldo" onclick="setCategory('caldo')">Caldo</button>
+      <button class="tab" type="button" data-cat="botanas" onclick="setCategory('botanas')">Botanas</button>
+    </div>
 
-  <!-- PRODUCTOS -->
-  <div class="products">
+    <div class="search">
+      <input id="searchInput" type="text" placeholder="Buscar: fruta, dorilocos, tostitos..." oninput="applyFilters()">
+    </div>
+  </div>
 
-    <!-- 1) FRUTA PREPARADA -->
-    <div class="card" id="prod-fruta">
-      <img src="fruta.jpg" alt="Fruta preparada">
-      <div class="content">
-        <div class="top">
-          <h3 style="margin:0">🍉 Fruta preparada</h3>
+  <div class="grid" id="productGrid">
+
+    <!-- FRUTA PREPARADA (cat: fruta) -->
+    <div class="card product" id="prod-fruta" data-cat="fruta" data-name="fruta preparada">
+      <div class="media">
+        <img src="fruta.jpg" alt="Fruta preparada">
+        <div class="titlebar">
+          <div class="ptitle">🍉 Fruta preparada</div>
+          <div class="badge">Arma a tu gusto</div>
         </div>
-
+      </div>
+      <div class="content">
         <label>Tamaño</label>
         <select data-field="size">
           <option>Chico ($35)</option>
@@ -131,7 +511,7 @@ textarea{resize:vertical;min-height:70px}
         </select>
 
         <label>Frutas</label>
-        <div class="group">
+        <div class="group two">
           <label><input type="checkbox" data-field="fruit" value="Sandía"> Sandía</label>
           <label><input type="checkbox" data-field="fruit" value="Piña"> Piña</label>
           <label><input type="checkbox" data-field="fruit" value="Mango"> Mango (+$10)</label>
@@ -142,7 +522,7 @@ textarea{resize:vertical;min-height:70px}
         </div>
 
         <label>Extras</label>
-        <div class="group">
+        <div class="group two">
           <label><input type="checkbox" data-field="extra" value="Chile Miguelito"> Chile Miguelito</label>
           <label><input type="checkbox" data-field="extra" value="Chile pica"> Chile pica</label>
           <label><input type="checkbox" data-field="extra" value="Chile no pica"> Chile no pica</label>
@@ -161,14 +541,16 @@ textarea{resize:vertical;min-height:70px}
       </div>
     </div>
 
-    <!-- 2) CALDO DE OSO -->
-    <div class="card" id="prod-caldo" style="margin-top:16px">
-      <img src="caldo.jpg" alt="Caldo de oso">
-      <div class="content">
-        <div class="top">
-          <h3 style="margin:0">🍺 Caldo de oso</h3>
+    <!-- CALDO DE OSO (cat: caldo) -->
+    <div class="card product" id="prod-caldo" data-cat="caldo" data-name="caldo de oso">
+      <div class="media">
+        <img src="caldo.jpg" alt="Caldo de oso">
+        <div class="titlebar">
+          <div class="ptitle">🍺 Caldo de oso</div>
+          <div class="badge">Chico / Grande</div>
         </div>
-
+      </div>
+      <div class="content">
         <label>Tamaño</label>
         <select data-field="size">
           <option>Chico ($40)</option>
@@ -176,7 +558,7 @@ textarea{resize:vertical;min-height:70px}
         </select>
 
         <label>Frutas</label>
-        <div class="group">
+        <div class="group two">
           <label><input type="checkbox" data-field="fruit" value="Sandía"> Sandía</label>
           <label><input type="checkbox" data-field="fruit" value="Piña"> Piña</label>
           <label><input type="checkbox" data-field="fruit" value="Mango"> Mango (+$10)</label>
@@ -187,7 +569,7 @@ textarea{resize:vertical;min-height:70px}
         </div>
 
         <label>Extras</label>
-        <div class="group">
+        <div class="group two">
           <label><input type="checkbox" data-field="extra" value="Vinagre de piña"> Vinagre de piña</label>
           <label><input type="checkbox" data-field="extra" value="Camarón seco"> Camarón seco (+$10)</label>
           <label><input type="checkbox" data-field="extra" value="Chile pica"> Chile pica</label>
@@ -206,17 +588,18 @@ textarea{resize:vertical;min-height:70px}
       </div>
     </div>
 
-    <!-- 3) DORILOCOS -->
-    <div class="card" id="prod-dori" style="margin-top:16px">
-      <img src="dorilocos.jpg" alt="Dorilocos">
-      <div class="content">
-        <div class="top">
-          <h3 style="margin:0">🌶️ Dorilocos</h3>
-          <span class="badge">$50</span>
+    <!-- DORILOCOS (cat: botanas) -->
+    <div class="card product" id="prod-dori" data-cat="botanas" data-name="dorilocos">
+      <div class="media">
+        <img src="dorilocos.jpg" alt="Dorilocos">
+        <div class="titlebar">
+          <div class="ptitle">🌶️ Dorilocos</div>
+          <div class="badge">$50</div>
         </div>
-
+      </div>
+      <div class="content">
         <label>Extras</label>
-        <div class="group">
+        <div class="group two">
           <label><input type="checkbox" data-field="extra" value="Cacahuate japonés"> Cacahuate japonés</label>
           <label><input type="checkbox" data-field="extra" value="Cacahuate salado"> Cacahuate salado</label>
           <label><input type="checkbox" data-field="extra" value="Churrito rojo"> Churrito rojo</label>
@@ -231,7 +614,7 @@ textarea{resize:vertical;min-height:70px}
           <label><input type="checkbox" data-field="extra" value="Chile pica"> Chile pica</label>
           <label><input type="checkbox" data-field="extra" value="Chile no pica"> Chile no pica</label>
           <label><input type="checkbox" data-field="extra" value="Queso rallado"> Queso rallado</label>
-          <label><input type="checkbox" data-field="extra" value="Aguachile de camarón"> Aguachile de camarón (+$30) (Miércoles de Ceniza y Viernes de Cuaresma)</label>
+          <label><input type="checkbox" data-field="extra" value="Aguachile de camarón"> Aguachile de camarón (+$40) (Miércoles de Ceniza y Viernes de Cuaresma)</label>
         </div>
 
         <label>Cantidad</label>
@@ -244,17 +627,18 @@ textarea{resize:vertical;min-height:70px}
       </div>
     </div>
 
-    <!-- 4) TOSTITOS -->
-    <div class="card" id="prod-tostitos" style="margin-top:16px">
-      <img src="tostitos.jpg" alt="Tostitos">
-      <div class="content">
-        <div class="top">
-          <h3 style="margin:0">🟨 Tostitos</h3>
-          <span class="badge">$50</span>
+    <!-- TOSTITOS (cat: botanas) -->
+    <div class="card product" id="prod-tostitos" data-cat="botanas" data-name="tostitos">
+      <div class="media">
+        <img src="tostitos.jpg" alt="Tostitos">
+        <div class="titlebar">
+          <div class="ptitle">🟩 Tostitos</div>
+          <div class="badge">$50</div>
         </div>
-
+      </div>
+      <div class="content">
         <label>Extras</label>
-        <div class="group">
+        <div class="group two">
           <label><input type="checkbox" data-field="extra" value="Cacahuate japonés"> Cacahuate japonés</label>
           <label><input type="checkbox" data-field="extra" value="Cacahuate salado"> Cacahuate salado</label>
           <label><input type="checkbox" data-field="extra" value="Churrito rojo"> Churrito rojo</label>
@@ -269,7 +653,7 @@ textarea{resize:vertical;min-height:70px}
           <label><input type="checkbox" data-field="extra" value="Chile pica"> Chile pica</label>
           <label><input type="checkbox" data-field="extra" value="Chile no pica"> Chile no pica</label>
           <label><input type="checkbox" data-field="extra" value="Queso rallado"> Queso rallado</label>
-          <label><input type="checkbox" data-field="extra" value="Aguachile de camarón"> Aguachile de camarón (+$30) (Miércoles de Ceniza y Viernes de Cuaresma)</label>
+          <label><input type="checkbox" data-field="extra" value="Aguachile de camarón"> Aguachile de camarón (+$40) (Miércoles de Ceniza y Viernes de Cuaresma)</label>
         </div>
 
         <label>Cantidad</label>
@@ -282,17 +666,18 @@ textarea{resize:vertical;min-height:70px}
       </div>
     </div>
 
-    <!-- 5) PAPAS LOCAS -->
-    <div class="card" id="prod-papas" style="margin-top:16px">
-      <img src="papas.jpg" alt="Papas locas">
-      <div class="content">
-        <div class="top">
-          <h3 style="margin:0">🥔 Papas locas</h3>
-          <span class="badge">$50</span>
+    <!-- PAPAS LOCAS (cat: botanas) -->
+    <div class="card product" id="prod-papas" data-cat="botanas" data-name="papas locas">
+      <div class="media">
+        <img src="papas.jpg" alt="Papas locas">
+        <div class="titlebar">
+          <div class="ptitle">🥔 Papas locas</div>
+          <div class="badge">$50</div>
         </div>
-
+      </div>
+      <div class="content">
         <label>Extras</label>
-        <div class="group">
+        <div class="group two">
           <label><input type="checkbox" data-field="extra" value="Cacahuate japonés"> Cacahuate japonés</label>
           <label><input type="checkbox" data-field="extra" value="Cacahuate salado"> Cacahuate salado</label>
           <label><input type="checkbox" data-field="extra" value="Churrito rojo"> Churrito rojo</label>
@@ -306,7 +691,7 @@ textarea{resize:vertical;min-height:70px}
           <label><input type="checkbox" data-field="extra" value="Chile pica"> Chile pica</label>
           <label><input type="checkbox" data-field="extra" value="Chile no pica"> Chile no pica</label>
           <label><input type="checkbox" data-field="extra" value="Queso rallado"> Queso rallado</label>
-          <label><input type="checkbox" data-field="extra" value="Aguachile de camarón"> Aguachile de camarón (+$30) (Miércoles de Ceniza y Viernes de Cuaresma)</label>
+          <label><input type="checkbox" data-field="extra" value="Aguachile de camarón"> Aguachile de camarón (+$40) (Miércoles de Ceniza y Viernes de Cuaresma)</label>
         </div>
 
         <label>Cantidad</label>
@@ -321,253 +706,318 @@ textarea{resize:vertical;min-height:70px}
 
   </div>
 
-  <!-- CARRITO -->
-  <div class="card cart">
-    <div class="content">
-      <div class="top">
-        <h3 style="margin:0">🧺 Tu pedido</h3>
-        <span class="badge" id="cartCount">0 productos</span>
-      </div>
-
-      <div class="muted">Agrega productos y al final manda todo por WhatsApp.</div>
-      <div class="cart-list" id="cartList"></div>
-
-      <div class="divider"></div>
-
-      <label>Nombre (opcional)</label>
-      <input type="text" id="customerName" placeholder="Ej: Juan / Carlos">
-
-      <label>Observaciones generales (opcional)</label>
-      <textarea id="generalNotes" placeholder="Ej: voy por él en 10 min, para llevar..."></textarea>
-
-      <label style="margin-top:12px;font-weight:800">
-        <input type="checkbox" id="deliveryCheck" onchange="toggleDeliveryNote()">
-        A domicilio
-      </label>
-      <div id="deliveryNote" class="note" style="display:none">
-        🚚 Revisar las tarifas de envío según la zona.
-      </div>
-
-      <div class="totals">
-        <div class="trow"><span>Subtotal</span><strong id="subtotalVal">$0</strong></div>
-        <div class="trow"><span>Total</span><strong id="totalVal">$0</strong></div>
-        <div class="muted">* El envío se confirma por WhatsApp según la zona.</div>
-      </div>
-
-      <button class="btn wa" type="button" onclick="checkoutWhatsApp()">📲 Realizar pedido por WhatsApp</button>
-      <button class="btn danger" type="button" onclick="clearCart()">🗑️ Vaciar carrito</button>
+  <!-- MAPA -->
+  <div class="map-card">
+    <div class="map-title">📍 Ubicación</div>
+    <iframe class="map-embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+      src="https://maps.google.com/maps?q=21.1439,-101.6533&z=17&output=embed"></iframe>
+    <div class="map-actions">
+      <b>Dirección:</b> Blvd. Hilario Medina 4613, Unidad Deportiva, 37237 León de los Aldama, Gto.<br>
+      <a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=21.1439,-101.6533">Abrir ubicación</a>
+      <br>
+      <a target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=21.1439,-101.6533&travelmode=driving">Cómo llegar</a>
     </div>
   </div>
 
 </div>
 
-<!-- MAPA -->
-<div class="map-card">
-  <div class="map-title">📍 Ubicación</div>
-  <iframe class="map-embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-    src="https://maps.google.com/maps?q=21.1439,-101.6533&z=17&output=embed"></iframe>
-  <div class="map-actions">
-    <b>Dirección:</b> Blvd. Hilario Medina 4613, Unidad Deportiva, 37237 León de los Aldama, Gto.<br>
-    <a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=21.1439,-101.6533">Abrir ubicación</a>
-    <br>
-    <a target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=21.1439,-101.6533&travelmode=driving">Cómo llegar</a>
+<!-- OVERLAY + DRAWER -->
+<div id="overlay" class="overlay" onclick="closeCart()"></div>
+
+<div id="drawer" class="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <div style="display:flex;align-items:center;gap:10px">
+      <h3>🧺 Tu pedido</h3>
+      <span class="cart-count" id="cartCount">0</span>
+    </div>
+    <button class="close-btn" type="button" onclick="closeCart()">✕</button>
+  </div>
+
+  <div class="drawer-body">
+    <div class="muted">Mandamos a WhatsApp: sin precios por ítem, solo subtotales y total.</div>
+
+    <div class="cart-list" id="cartList"></div>
+
+    <div class="divider"></div>
+
+    <label>Nombre (opcional)</label>
+    <input type="text" id="customerName" placeholder="Ej: Juan / Carlos">
+
+    <label>Observaciones generales (opcional)</label>
+    <textarea id="generalNotes" placeholder="Ej: voy por él en 10 min, para llevar..."></textarea>
+
+    <label style="margin-top:12px;font-weight:1000;display:flex;align-items:center;gap:10px">
+      <input type="checkbox" id="deliveryCheck" onchange="toggleDeliveryNote()" style="width:auto;accent-color:var(--primary)">
+      A domicilio
+    </label>
+    <div id="deliveryNote" class="note" style="display:none">
+      🚚 Revisar las tarifas de envío según la zona.
+    </div>
+
+    <div class="totals">
+      <div class="trow"><span>Subtotal</span><strong id="subtotalVal">$0</strong></div>
+      <div class="trow"><span>Total</span><strong id="totalVal">$0</strong></div>
+      <div class="muted">* El envío se confirma por WhatsApp según la zona.</div>
+    </div>
+
+    <button class="btn btn-wa" type="button" onclick="checkoutWhatsApp()">📲 Realizar pedido por WhatsApp</button>
+    <button class="btn btn-danger" type="button" onclick="clearCart()">🗑️ Vaciar carrito</button>
+
+    <div class="small-note">
+      ✅ Archivos de imágenes (exacto en minúsculas):<br>
+      <b>logo.jpg</b>, <b>fruta.jpg</b>, <b>caldo.jpg</b>, <b>dorilocos.jpg</b>, <b>tostitos.jpg</b>, <b>papas.jpg</b>
+    </div>
   </div>
 </div>
 
-<!-- BOTÓN FLOTANTE TOTAL -->
-<div id="fabTotal" class="fab fab-hide" onclick="goToCart()">
-  <span class="pill" id="fabCount">0</span>
-  <div class="stack">
-    <div><strong>Total</strong> <span class="money" id="fabMoney">$0</span></div>
-    <div class="muted2">Toca para ver carrito</div>
+<!-- FAB -->
+<div id="fabTotal" class="fab fab-hide" onclick="openCart()">
+  <div class="left">
+    <div class="dot" id="fabCount">0</div>
+    <div class="meta">
+      <strong>Ver carrito</strong>
+      <span>Se actualiza en vivo</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="money" id="fabMoney">$0</div>
+    <button class="cta" type="button" onclick="openCart()">Abrir</button>
   </div>
 </div>
 
 <script>
-  const WA_NUMBER = "5214774961901";
-  const EXTRA_CAMARON_SECO = "Camarón seco";
-  const EXTRA_AGUACHILE = "Aguachile de camarón";
-  let cart = [];
+/* ========= CONFIG ========= */
+const WA_NUMBER = "5214774961901";
+const EXTRA_CAMARON_SECO = "Camarón seco";
+const EXTRA_AGUACHILE = "Aguachile de camarón";
 
-  function qsa(root, sel){ return Array.from(root.querySelectorAll(sel)); }
-  function getValues(rootId, field){
-    const root = document.getElementById(rootId);
-    return qsa(root, `[data-field="${field}"]:checked`).map(x => x.value);
+let cart = [];
+let currentCategory = "all";
+
+/* ========= UI: FILTERS ========= */
+function setCategory(cat){
+  currentCategory = cat;
+  document.querySelectorAll(".tab").forEach(b=>{
+    b.classList.toggle("active", b.dataset.cat === cat);
+  });
+  applyFilters();
+}
+
+function applyFilters(){
+  const q = (document.getElementById("searchInput").value || "").trim().toLowerCase();
+  document.querySelectorAll(".product").forEach(card=>{
+    const name = (card.dataset.name || "").toLowerCase();
+    const cat = (card.dataset.cat || "all").toLowerCase();
+
+    const catOK = (currentCategory === "all") || (cat === currentCategory);
+    const qOK = !q || name.includes(q);
+
+    card.style.display = (catOK && qOK) ? "" : "none";
+  });
+}
+
+/* ========= UI: DRAWER ========= */
+function openCart(){
+  document.getElementById("drawer").classList.add("open");
+  document.getElementById("overlay").classList.add("open");
+  document.getElementById("drawer").setAttribute("aria-hidden","false");
+}
+function closeCart(){
+  document.getElementById("drawer").classList.remove("open");
+  document.getElementById("overlay").classList.remove("open");
+  document.getElementById("drawer").setAttribute("aria-hidden","true");
+}
+document.addEventListener("keydown",(e)=>{ if(e.key==="Escape") closeCart(); });
+
+function toggleDeliveryNote(){
+  const isChecked = document.getElementById("deliveryCheck").checked;
+  document.getElementById("deliveryNote").style.display = isChecked ? "block" : "none";
+}
+
+/* ========= HELPERS ========= */
+function qsa(root, sel){ return Array.from(root.querySelectorAll(sel)); }
+
+function getValues(rootId, field){
+  const root = document.getElementById(rootId);
+  return qsa(root, `[data-field="${field}"]:checked`).map(x => x.value);
+}
+function getInputValue(rootId, field){
+  const root = document.getElementById(rootId);
+  const el = root.querySelector(`[data-field="${field}"]`);
+  return el ? el.value : "";
+}
+function formatMoney(n){ return "$" + Math.round(n); }
+function cleanSizeText(size){
+  return (size || "").replace(/\s*\(\$\d+\)\s*/g, "").trim();
+}
+
+/* ========= PRICING ========= */
+function computeBasePrice(productName, sizeText){
+  let price = 0;
+  if(productName === "Fruta preparada"){
+    if(sizeText.includes("Chico")) price = 35;
+    else if(sizeText.includes("Mediano")) price = 45;
+    else if(sizeText.includes("Grande")) price = 60;
+  } else if(productName === "Caldo de oso"){
+    if(sizeText.includes("Chico")) price = 40;
+    else if(sizeText.includes("Grande")) price = 60;
+  } else if(productName === "Dorilocos" || productName === "Papas locas" || productName === "Tostitos"){
+    price = 50;
   }
-  function getInputValue(rootId, field){
-    const root = document.getElementById(rootId);
-    const el = root.querySelector(`[data-field="${field}"]`);
-    return el ? el.value : "";
-  }
+  return price;
+}
 
-  function computeBasePrice(productName, sizeText){
-    let price = 0;
-    if(productName === "Fruta preparada"){
-      if(sizeText.includes("Chico")) price = 35;
-      else if(sizeText.includes("Mediano")) price = 45;
-      else if(sizeText.includes("Grande")) price = 60;
-    } else if(productName === "Caldo de oso"){
-      if(sizeText.includes("Chico")) price = 40;
-      else if(sizeText.includes("Grande")) price = 60;
-    } else if(productName === "Dorilocos" || productName === "Papas locas" || productName === "Tostitos"){
-      price = 50;
-    }
-    return price;
-  }
+/* ========= CART ========= */
+function addToCart(product, rootId, hasSize, hasFruits){
+  const size = hasSize ? getInputValue(rootId, "size") : "";
+  const qty = Math.max(1, parseInt(getInputValue(rootId, "qty") || "1", 10) || 1);
+  const notes = (getInputValue(rootId, "notes") || "").trim();
+  const fruits = hasFruits ? getValues(rootId, "fruit") : [];
+  const extras = getValues(rootId, "extra");
 
-  function formatMoney(n){ return "$" + Math.round(n); }
+  const baseUnit = computeBasePrice(product, size);
 
-  function toggleDeliveryNote(){
-    const isChecked = document.getElementById("deliveryCheck").checked;
-    document.getElementById("deliveryNote").style.display = isChecked ? "block" : "none";
-  }
+  // Mango +10 por unidad (solo si aplica frutas)
+  const mangoSelected = fruits.includes("Mango");
+  let unitPrice = baseUnit + (mangoSelected ? 10 : 0);
 
-  function goToCart(){
-    const cartEl = document.querySelector(".cart");
-    if(cartEl) cartEl.scrollIntoView({behavior:"smooth", block:"start"});
-  }
+  // Caldo: Camarón seco +10 por unidad
+  if(product === "Caldo de oso" && extras.includes(EXTRA_CAMARON_SECO)) unitPrice += 10;
 
-  function updateFab(total){
-    const fab = document.getElementById("fabTotal");
-    const count = document.getElementById("fabCount");
-    const money = document.getElementById("fabMoney");
-    if(cart.length === 0){
-      fab.classList.add("fab-hide");
-      count.textContent = "0";
-      money.textContent = "$0";
-      return;
-    }
-    fab.classList.remove("fab-hide");
-    count.textContent = String(cart.length);
-    money.textContent = formatMoney(total);
-  }
+  // Dorilocos/Tostitos/Papas: Aguachile +40 por unidad
+  if((product === "Dorilocos" || product === "Tostitos" || product === "Papas locas") && extras.includes(EXTRA_AGUACHILE)) unitPrice += 40;
 
-  function addToCart(product, rootId, hasSize, hasFruits){
-    const size = hasSize ? getInputValue(rootId, "size") : "";
-    const qty = Math.max(1, parseInt(getInputValue(rootId, "qty") || "1", 10) || 1);
-    const notes = (getInputValue(rootId, "notes") || "").trim();
-    const fruits = hasFruits ? getValues(rootId, "fruit") : [];
-    const extras = getValues(rootId, "extra");
-
-    const baseUnit = computeBasePrice(product, size);
-
-    const mangoSelected = fruits.includes("Mango");
-    let unitPrice = baseUnit + (mangoSelected ? 10 : 0);
-
-    if(product === "Caldo de oso" && extras.includes(EXTRA_CAMARON_SECO)) unitPrice += 10;
-    if((product === "Dorilocos" || product === "Tostitos" || product === "Papas locas") && extras.includes(EXTRA_AGUACHILE)) unitPrice += 40;
-
-    cart.push({
-      id: (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random()),
-      product, size, qty, fruits, extras, notes,
-      unitPrice
-    });
-
-    renderCart();
-  }
-
-  function removeItem(id){
-    cart = cart.filter(x => x.id !== id);
-    renderCart();
-  }
-
-  function clearCart(){
-    cart = [];
-    renderCart();
-  }
-
-  function computeTotals(){
-    const subtotal = cart.reduce((s, it) => s + (it.unitPrice * it.qty), 0);
-    const total = subtotal;
-    document.getElementById("subtotalVal").textContent = formatMoney(subtotal);
-    document.getElementById("totalVal").textContent = formatMoney(total);
-    updateFab(total);
-    return { subtotal, total };
-  }
-
-  function renderCart(){
-    const list = document.getElementById("cartList");
-    const count = document.getElementById("cartCount");
-    count.textContent = `${cart.length} producto${cart.length===1?'':'s'}`;
-
-    if(cart.length === 0){
-      list.innerHTML = `<div class="muted">Tu carrito está vacío. Agrega algo 👇</div>`;
-      document.getElementById("subtotalVal").textContent = "$0";
-      document.getElementById("totalVal").textContent = "$0";
-      updateFab(0);
-      return;
-    }
-
-    list.innerHTML = cart.map((it, idx) => {
-      const itemSubtotal = it.unitPrice * it.qty;
-      const lines = [];
-      lines.push(`Subtotal: ${formatMoney(itemSubtotal)}`);
-      if(it.size) lines.push(`Tamaño: ${it.size}`);
-      if(it.fruits && it.fruits.length) lines.push(`Frutas: ${it.fruits.join(", ")}`);
-      lines.push(`Extras: ${(it.extras && it.extras.length) ? it.extras.join(", ") : "—"}`);
-      if(it.notes) lines.push(`Obs: ${it.notes}`);
-
-      return `
-        <div class="item">
-          <div class="item-top">
-            <div><b>${idx+1}) x${it.qty} ${it.product}</b></div>
-            <button class="mini" type="button" onclick="removeItem('${it.id}')">Quitar</button>
-          </div>
-          <div class="muted" style="margin-top:6px; white-space:pre-wrap">${lines.join("\n")}</div>
-        </div>
-      `;
-    }).join("");
-
-    computeTotals();
-  }
-
-  function cleanSizeText(size){
-    return (size || "").replace(/\s*\(\$\d+\)\s*/g, "").trim();
-  }
-
-  function checkoutWhatsApp(){
-    if(cart.length === 0){
-      alert("Tu carrito está vacío. Agrega al menos un producto.");
-      return;
-    }
-
-    const name = (document.getElementById("customerName").value || "").trim();
-    const gNotes = (document.getElementById("generalNotes").value || "").trim();
-    const delivery = document.getElementById("deliveryCheck").checked;
-
-    const totals = computeTotals();
-
-    let msg = "Hola, quiero pedir en FRUTÍSIMA MADRE:\n";
-    if(name) msg += `Nombre: ${name}\n`;
-    msg += "\n🧺 Pedido:\n";
-
-    cart.forEach((it, i) => {
-      const itemSubtotal = it.unitPrice * it.qty;
-
-      msg += `${i+1}) x${it.qty} ${it.product}\n`;
-      if(it.size) msg += `   - Tamaño: ${cleanSizeText(it.size)}\n`;
-      if(it.fruits && it.fruits.length) msg += `   - Frutas: ${it.fruits.join(", ")}\n`;
-      if(it.extras && it.extras.length) msg += `   - Extras: ${it.extras.join(", ")}\n`;
-      if(it.notes) msg += `   - Observaciones: ${it.notes}\n`;
-
-      msg += `   Subtotal: ${formatMoney(itemSubtotal)}\n\n`;
-    });
-
-    msg += `💰 Subtotal general: ${formatMoney(totals.subtotal)}\n`;
-    msg += `💰 Total: ${formatMoney(totals.total)}\n`;
-
-    msg += delivery
-      ? `\n🚚 A domicilio: Sí (revisar tarifa según zona)\n`
-      : `\n📍 A domicilio: No\n`;
-
-    if(gNotes) msg += `\n📝 Observaciones generales: ${gNotes}\n`;
-
-    window.location.href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
-  }
+  cart.push({
+    id: (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random()),
+    product, size, qty, fruits, extras, notes,
+    unitPrice
+  });
 
   renderCart();
+  openCart(); // se siente pro: agregas y se abre carrito
+}
+
+function removeItem(id){
+  cart = cart.filter(x => x.id !== id);
+  renderCart();
+}
+
+function clearCart(){
+  cart = [];
+  renderCart();
+}
+
+function computeTotals(){
+  const subtotal = cart.reduce((s, it) => s + (it.unitPrice * it.qty), 0);
+  const total = subtotal;
+
+  document.getElementById("subtotalVal").textContent = formatMoney(subtotal);
+  document.getElementById("totalVal").textContent = formatMoney(total);
+
+  // Header + FAB
+  document.getElementById("headerCount").textContent = String(cart.length);
+  document.getElementById("cartCount").textContent = String(cart.length);
+
+  updateFab(total);
+  return { subtotal, total };
+}
+
+function updateFab(total){
+  const fab = document.getElementById("fabTotal");
+  const count = document.getElementById("fabCount");
+  const money = document.getElementById("fabMoney");
+
+  if(cart.length === 0){
+    fab.classList.add("fab-hide");
+    count.textContent = "0";
+    money.textContent = "$0";
+    return;
+  }
+  fab.classList.remove("fab-hide");
+  count.textContent = String(cart.length);
+  money.textContent = formatMoney(total);
+}
+
+function renderCart(){
+  const list = document.getElementById("cartList");
+
+  if(cart.length === 0){
+    list.innerHTML = `<div class="small-note">Tu carrito está vacío. Agrega algo del menú 👇</div>`;
+    document.getElementById("subtotalVal").textContent = "$0";
+    document.getElementById("totalVal").textContent = "$0";
+    document.getElementById("headerCount").textContent = "0";
+    document.getElementById("cartCount").textContent = "0";
+    updateFab(0);
+    return;
+  }
+
+  list.innerHTML = cart.map((it, idx) => {
+    const itemSubtotal = it.unitPrice * it.qty;
+    const lines = [];
+    lines.push(`Subtotal: ${formatMoney(itemSubtotal)}`);
+    if(it.size) lines.push(`Tamaño: ${it.size}`);
+    if(it.fruits && it.fruits.length) lines.push(`Frutas: ${it.fruits.join(", ")}`);
+    lines.push(`Extras: ${(it.extras && it.extras.length) ? it.extras.join(", ") : "—"}`);
+    if(it.notes) lines.push(`Obs: ${it.notes}`);
+
+    return `
+      <div class="item">
+        <div class="item-top">
+          <div><b>${idx+1}) x${it.qty} ${it.product}</b></div>
+          <button class="mini" type="button" onclick="removeItem('${it.id}')">Quitar</button>
+        </div>
+        <div class="muted" style="margin-top:8px; white-space:pre-wrap">${lines.join("\n")}</div>
+      </div>
+    `;
+  }).join("");
+
+  computeTotals();
+}
+
+/* ========= WHATSAPP ========= */
+function checkoutWhatsApp(){
+  if(cart.length === 0){
+    alert("Tu carrito está vacío. Agrega al menos un producto.");
+    return;
+  }
+
+  const name = (document.getElementById("customerName").value || "").trim();
+  const gNotes = (document.getElementById("generalNotes").value || "").trim();
+  const delivery = document.getElementById("deliveryCheck").checked;
+
+  const totals = computeTotals();
+
+  let msg = "Hola, quiero pedir en FRUTÍSIMA MADRE:\n";
+  if(name) msg += `Nombre: ${name}\n`;
+  msg += "\n🧺 Pedido:\n";
+
+  cart.forEach((it, i) => {
+    const itemSubtotal = it.unitPrice * it.qty;
+
+    msg += `${i+1}) x${it.qty} ${it.product}\n`;
+    if(it.size) msg += `   - Tamaño: ${cleanSizeText(it.size)}\n`;
+    if(it.fruits && it.fruits.length) msg += `   - Frutas: ${it.fruits.join(", ")}\n`;
+    if(it.extras && it.extras.length) msg += `   - Extras: ${it.extras.join(", ")}\n`;
+    if(it.notes) msg += `   - Observaciones: ${it.notes}\n`;
+    msg += `   Subtotal: ${formatMoney(itemSubtotal)}\n\n`;
+  });
+
+  msg += `💰 Subtotal general: ${formatMoney(totals.subtotal)}\n`;
+  msg += `💰 Total: ${formatMoney(totals.total)}\n`;
+
+  msg += delivery
+    ? `\n🚚 A domicilio: Sí (revisar tarifa según zona)\n`
+    : `\n📍 A domicilio: No\n`;
+
+  if(gNotes) msg += `\n📝 Observaciones generales: ${gNotes}\n`;
+
+  window.location.href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+}
+
+/* init */
+applyFilters();
+renderCart();
 </script>
 
 </body>
 </html>
-
