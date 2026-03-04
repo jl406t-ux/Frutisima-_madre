@@ -125,8 +125,17 @@ header{
 }
 .ad .copy h2{margin:0;font-size:18px;font-weight:1000;line-height:1.2}
 
-/* CATEGORÍAS */
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin: 10px 0 16px}
+/* === UPGRADE 1: CATEGORÍAS STICKY === */
+.tabs-wrap{
+  position: sticky;
+  top: 12px;
+  z-index: 60;
+  margin: 10px 0 16px;
+  padding: 10px 0;
+  background: linear-gradient(to bottom, rgba(246,247,249,.85), rgba(246,247,249,.55));
+  backdrop-filter: blur(10px);
+}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
 .tab{
   border:1px solid rgba(229,231,235,.95);
   background:rgba(255,255,255,.9);
@@ -205,6 +214,12 @@ textarea{resize:vertical;min-height:70px}
   color:#fff;box-shadow:0 12px 24px rgba(15,23,42,.18);
 }
 .add:hover{filter:brightness(1.06)}
+/* === UPGRADE 2: feedback "Agregado ✅" === */
+.btn.add.added{
+  background: linear-gradient(135deg, var(--primary), var(--primary2));
+  color:#00130a;
+  box-shadow:0 12px 24px rgba(34,197,94,.26);
+}
 .small-note{
   margin-top:10px;color:var(--muted);font-size:12px;background:#fafafa;border:1px solid rgba(229,231,235,.92);border-radius:12px;padding:10px 12px;
 }
@@ -358,7 +373,7 @@ textarea{resize:vertical;min-height:70px}
     </div>
   </header>
 
-  <!-- Publicidad (sin +$40) -->
+  <!-- Publicidad -->
   <section class="ad" aria-label="Promoción">
     <div class="media">
       <img src="tostittos.jpg" alt="Promoción Tostitos">
@@ -368,12 +383,14 @@ textarea{resize:vertical;min-height:70px}
     </div>
   </section>
 
-  <!-- Categorías -->
-  <div class="tabs">
-    <button class="tab active" type="button" data-cat="all" onclick="setCategory('all')">Todo</button>
-    <button class="tab" type="button" data-cat="fruta" onclick="setCategory('fruta')">Fruta</button>
-    <button class="tab" type="button" data-cat="caldo" onclick="setCategory('caldo')">Caldo</button>
-    <button class="tab" type="button" data-cat="botanas" onclick="setCategory('botanas')">Botanas</button>
+  <!-- Categorías (STICKY) -->
+  <div class="tabs-wrap">
+    <div class="tabs">
+      <button class="tab active" type="button" data-cat="all" onclick="setCategory('all')">Todo</button>
+      <button class="tab" type="button" data-cat="fruta" onclick="setCategory('fruta')">Fruta</button>
+      <button class="tab" type="button" data-cat="caldo" onclick="setCategory('caldo')">Caldo</button>
+      <button class="tab" type="button" data-cat="botanas" onclick="setCategory('botanas')">Botanas</button>
+    </div>
   </div>
 
   <div class="grid">
@@ -422,7 +439,7 @@ textarea{resize:vertical;min-height:70px}
         <label>Observaciones</label>
         <textarea data-field="notes" placeholder="Ej: sin queso, más chamoy..."></textarea>
 
-        <button class="btn add" type="button" onclick="addToCart('Fruta preparada','prod-fruta',true,true)">➕ Agregar</button>
+        <button class="btn add" type="button" onclick="addToCart('Fruta preparada','prod-fruta',true,true,this)">➕ Agregar</button>
       </div>
     </div>
 
@@ -457,6 +474,7 @@ textarea{resize:vertical;min-height:70px}
         <div class="group two">
           <label><input type="checkbox" data-field="extra" value="Vinagre de piña"> Vinagre de piña</label>
           <label><input type="checkbox" data-field="extra" value="Camarón seco"> Camarón seco (+$10)</label>
+          <label><input type="checkbox" data-field="extra" value="Cebolla"> Cebolla</label>
           <label><input type="checkbox" data-field="extra" value="Chile pica"> Chile pica</label>
           <label><input type="checkbox" data-field="extra" value="Chile no pica"> Chile no pica</label>
           <label><input type="checkbox" data-field="extra" value="Queso rallado"> Queso rallado</label>
@@ -469,7 +487,7 @@ textarea{resize:vertical;min-height:70px}
         <label>Observaciones</label>
         <textarea data-field="notes" placeholder="Ej: con mucho vinagre..."></textarea>
 
-        <button class="btn add" type="button" onclick="addToCart('Caldo de oso','prod-caldo',true,true)">➕ Agregar</button>
+        <button class="btn add" type="button" onclick="addToCart('Caldo de oso','prod-caldo',true,true,this)">➕ Agregar</button>
       </div>
     </div>
 
@@ -499,7 +517,7 @@ textarea{resize:vertical;min-height:70px}
           <label><input type="checkbox" data-field="extra" value="Chile pica"> Chile pica</label>
           <label><input type="checkbox" data-field="extra" value="Chile no pica"> Chile no pica</label>
           <label><input type="checkbox" data-field="extra" value="Queso rallado"> Queso rallado</label>
-          <label><input type="checkbox" data-field="extra" value="Aguachile de camarón"> Aguachile de camarón (+$40) (solo viernes)</label>
+          <label><input type="checkbox" data-field="extra" value="Aguachile de camarón"> Aguachile de camarón (+$40)</label>
         </div>
 
         <label>Cantidad</label>
@@ -508,7 +526,7 @@ textarea{resize:vertical;min-height:70px}
         <label>Observaciones</label>
         <textarea data-field="notes" placeholder="Ej: bien picoso..."></textarea>
 
-        <button class="btn add" type="button" onclick="addToCart('Dorilocos','prod-dori',false,false)">➕ Agregar</button>
+        <button class="btn add" type="button" onclick="addToCart('Dorilocos','prod-dori',false,false,this)">➕ Agregar</button>
       </div>
     </div>
 
@@ -524,6 +542,10 @@ textarea{resize:vertical;min-height:70px}
       <div class="content">
         <label>Extras</label>
         <div class="group two">
+          <label><input type="checkbox" data-field="extra" value="Tostitos verdes"> Tostitos verdes</label>
+          <label><input type="checkbox" data-field="extra" value="Tostitos morados"> Tostitos morados</label>
+          <label><input type="checkbox" data-field="extra" value="Camarón seco"> Camarón seco (+$10)</label>
+
           <label><input type="checkbox" data-field="extra" value="Cacahuate japonés"> Cacahuate japonés</label>
           <label><input type="checkbox" data-field="extra" value="Cacahuate salado"> Cacahuate salado</label>
           <label><input type="checkbox" data-field="extra" value="Churrito rojo"> Churrito rojo</label>
@@ -538,7 +560,7 @@ textarea{resize:vertical;min-height:70px}
           <label><input type="checkbox" data-field="extra" value="Chile pica"> Chile pica</label>
           <label><input type="checkbox" data-field="extra" value="Chile no pica"> Chile no pica</label>
           <label><input type="checkbox" data-field="extra" value="Queso rallado"> Queso rallado</label>
-          <label><input type="checkbox" data-field="extra" value="Aguachile de camarón"> Aguachile de camarón (+$40) (solo viernes)</label>
+          <label><input type="checkbox" data-field="extra" value="Aguachile de camarón"> Aguachile de camarón (+$40)</label>
         </div>
 
         <label>Cantidad</label>
@@ -547,7 +569,7 @@ textarea{resize:vertical;min-height:70px}
         <label>Observaciones</label>
         <textarea data-field="notes" placeholder="Ej: con mucho queso..."></textarea>
 
-        <button class="btn add" type="button" onclick="addToCart('Tostitos','prod-tostitos',false,false)">➕ Agregar</button>
+        <button class="btn add" type="button" onclick="addToCart('Tostitos','prod-tostitos',false,false,this)">➕ Agregar</button>
       </div>
     </div>
 
@@ -576,7 +598,7 @@ textarea{resize:vertical;min-height:70px}
           <label><input type="checkbox" data-field="extra" value="Chile pica"> Chile pica</label>
           <label><input type="checkbox" data-field="extra" value="Chile no pica"> Chile no pica</label>
           <label><input type="checkbox" data-field="extra" value="Queso rallado"> Queso rallado</label>
-          <label><input type="checkbox" data-field="extra" value="Aguachile de camarón"> Aguachile de camarón (+$40) (solo viernes)</label>
+          <label><input type="checkbox" data-field="extra" value="Aguachile de camarón"> Aguachile de camarón (+$40)</label>
         </div>
 
         <label>Cantidad</label>
@@ -585,7 +607,7 @@ textarea{resize:vertical;min-height:70px}
         <label>Observaciones</label>
         <textarea data-field="notes" placeholder="Ej: sin cueritos..."></textarea>
 
-        <button class="btn add" type="button" onclick="addToCart('Papas locas','prod-papas',false,false)">➕ Agregar</button>
+        <button class="btn add" type="button" onclick="addToCart('Papas locas','prod-papas',false,false,this)">➕ Agregar</button>
       </div>
     </div>
 
@@ -625,7 +647,7 @@ textarea{resize:vertical;min-height:70px}
   </div>
 
   <div class="drawer-body">
-    <div class="muted">WhatsApp: sin precios por ítem, solo subtotales y total.</div>
+    <div class="muted">WhatsApp: sin precio unitario; solo subtotales y total.</div>
 
     <div class="cart-list" id="cartList"></div>
 
@@ -674,7 +696,7 @@ textarea{resize:vertical;min-height:70px}
   </div>
   <div class="right">
     <div class="money" id="fabMoney">$0</div>
-    <button class="cta" type="button" onclick="openCart()">Abrir</button>
+    <button class="cta" type="button" onclick="event.stopPropagation(); openCart()">Abrir</button>
   </div>
 </div>
 
@@ -733,6 +755,23 @@ function showToast(text){
   toastTimer = setTimeout(()=> t.classList.remove("show"), 1700);
 }
 
+/* === UPGRADE 2: feedback "Agregado ✅" === */
+function feedbackAddButton(btn){
+  if(!btn) return;
+  const original = btn.dataset.originalText || btn.textContent;
+  btn.dataset.originalText = original;
+
+  btn.disabled = true;
+  btn.classList.add("added");
+  btn.textContent = "Agregado ✅";
+
+  setTimeout(()=>{
+    btn.disabled = false;
+    btn.classList.remove("added");
+    btn.textContent = original;
+  }, 1200);
+}
+
 /* HELPERS */
 function qsa(root, sel){ return Array.from(root.querySelectorAll(sel)); }
 function getValues(rootId, field){
@@ -766,8 +805,7 @@ function computeBasePrice(productName, sizeText){
 }
 
 /* CART */
-function addToCart(product, rootId, hasSize, hasFruits){
-  // ⚠️ IMPORTANTE: aquí NO se llama openCart()
+function addToCart(product, rootId, hasSize, hasFruits, btn){
   const size = hasSize ? getInputValue(rootId, "size") : "";
   const qty = Math.max(1, parseInt(getInputValue(rootId, "qty") || "1", 10) || 1);
   const notes = (getInputValue(rootId, "notes") || "").trim();
@@ -783,7 +821,10 @@ function addToCart(product, rootId, hasSize, hasFruits){
   // Caldo: Camarón seco +10 por unidad
   if(product === "Caldo de oso" && extras.includes(EXTRA_CAMARON_SECO)) unitPrice += 10;
 
-  // Botanas: Aguachile +40 por unidad
+  // Tostitos: Camarón seco +10 por unidad (nuevo)
+  if(product === "Tostitos" && extras.includes(EXTRA_CAMARON_SECO)) unitPrice += 10;
+
+  // Botanas: Aguachile +40 por unidad (sin restricción, ya que abren viernes)
   if((product === "Dorilocos" || product === "Tostitos" || product === "Papas locas") && extras.includes(EXTRA_AGUACHILE)) unitPrice += 40;
 
   cart.push({
@@ -792,6 +833,7 @@ function addToCart(product, rootId, hasSize, hasFruits){
   });
 
   renderCart();
+  feedbackAddButton(btn);
   showToast(`✅ Agregado: x${qty} ${product}`);
 }
 
@@ -800,6 +842,7 @@ function removeItem(id){
   renderCart();
 }
 function clearCart(){
+  if(!confirm("¿Seguro que quieres vaciar el carrito?")) return;
   cart = [];
   renderCart();
 }
